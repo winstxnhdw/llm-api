@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches: main
+    paths:
+      - .github/workflows/build.yml
+      - .dockerignore
+      - Dockerfile.build
+      - poetry.lock
+      - pyproject.toml
+      - supervisord.conf
+      - Caddyfile
+      - '**.py'
+
+jobs:
+  test:
+    uses: winstxnhdw/actions/.github/workflows/python.yml@main
+    with:
+      python-version: 3.11
+
+  build:
+    uses: winstxnhdw/actions/.github/workflows/docker-push.yml@main
+    with:
+      file: Dockerfile.build
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      packages: write
+
+  restart:
+    needs: [test, build]
+    uses: winstxnhdw/actions/.github/workflows/spaces-restart.yml@main
+    secrets:
+      token: ${{ secrets.HF_TOKEN }}
