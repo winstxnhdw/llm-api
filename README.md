@@ -21,8 +21,6 @@ curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/generate' \
      -H 'Content-Type: application/json' \
      -d \
      '{
-         "text": "Hello world!",
-         "source": "eng_Latn",
-         "target": "spa_Latn"
+         "instruction": "What is the capital of Japan?"
       }'
 ```
