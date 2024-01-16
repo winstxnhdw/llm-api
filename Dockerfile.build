@@ -16,7 +16,7 @@ RUN poetry install --without=dev --no-root
 
 FROM caddy:builder-alpine as caddy-builder
 
-RUN xcaddy build
+RUN xcaddy build --with github.com/darkweak/souin/plugins/caddy
 
 
 FROM python:3.11.7-slim

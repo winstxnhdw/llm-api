@@ -1,4 +1,14 @@
+{
+	order cache before rewrite
+	cache
+}
+
 :{$APP_PORT} {
+	cache {
+		allowed_http_verbs POST
+		ttl 24h
+	}
+
 	handle_path /api/* {
 		reverse_proxy http://localhost:{$SERVER_PORT} {
 			transport http {
