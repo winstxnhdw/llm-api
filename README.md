@@ -24,3 +24,18 @@ curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/generate' \
          "instruction": "What is the capital of Japan?"
       }'
 ```
+
+## Development
+
+First, install the required dependencies for your editor with the following.
+
+```bash
+poetry install
+```
+
+Now, you can access the Swagger UI at [localhost:7860/api/docs](http://localhost:7860/api/docs) after spinning the server up locally with the following.
+
+```bash
+docker build -f Dockerfile.build -t llm-api .
+docker run --rm -e APP_PORT=7860 -p 7860:7860 llm-api
+```
