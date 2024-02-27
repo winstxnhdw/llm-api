@@ -8,6 +8,9 @@
 	cache {
 		allowed_http_verbs POST
 		ttl 24h
+		timeout {
+			backend 300s
+		}
 	}
 
 	rate_limit {
