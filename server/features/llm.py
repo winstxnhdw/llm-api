@@ -5,6 +5,7 @@ from ctranslate2 import Generator as LLMGenerator
 from huggingface_hub import snapshot_download
 from transformers.models.llama import LlamaTokenizerFast
 
+from server.config import Config
 from server.types import Benchmark, Message
 
 
@@ -77,7 +78,7 @@ class LLM:
         """
         model_path = snapshot_download('winstxnhdw/openchat-3.5-ct2-int8')
 
-        cls.generator = LLMGenerator(model_path, compute_type='auto', inter_threads=1)
+        cls.generator = LLMGenerator(model_path, compute_type='auto', inter_threads=Config.worker_count)
         cls.tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True)
         cls.max_generation_length = 256
         cls.max_prompt_length = 4096 - cls.max_generation_length - cls.set_static_prompt(
