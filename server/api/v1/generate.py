@@ -1,4 +1,4 @@
-from fastapi.responses import StreamingResponse
+from starlette.responses import StreamingResponse
 
 from server.api.v1 import v1
 from server.features import LLM
