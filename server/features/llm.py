@@ -1,4 +1,4 @@
-from time import time
+from time import process_time
 from typing import Generator, Iterable
 
 from ctranslate2 import Generator as LLMGenerator
@@ -177,9 +177,9 @@ class LLM:
 
         tokenised_prompt = cls.tokeniser(prompt).tokens()
 
-        start = time()
+        start = process_time()
         response = ''.join(cls.generate([tokenised_prompt]))
-        total_time = time() - start
+        total_time = process_time() - start
 
         output_tokens = cls.tokeniser(response).tokens()
         total_tokens = len(tokenised_prompt) + len(cls.static_prompt) + len(output_tokens)
