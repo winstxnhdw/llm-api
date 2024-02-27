@@ -17,14 +17,20 @@ class LLM:
 
     Methods
     -------
-    stop_generation()
-        stop the generation of text
+    set_static_prompt(static_user_prompt: str, static_assistant_prompt: str) -> int
+        set the model's static prompt
 
-    query(messages: Iterable[Message]) -> Message | None
-        query the model
+    load()
+        download and load the language model
 
     generate(tokens_list: Iterable[list[str]]) -> Generator[str, None, None]
         generate text from a series/single prompt(s)
+
+    generate_from_instruction(instruction: str) -> Generator[str, None, None]
+        generate text from an instruction
+
+    benchmark(instruction: str) -> Benchmark
+        benchmark the model
     """
     generator: LLMGenerator
     tokeniser: LlamaTokenizerFast
@@ -128,7 +134,7 @@ class LLM:
         ----------
         instruction (str) : the instruction to generate text from
 
-        Returns
+        Yields
         -------
         answer (str) : the generated answer
         """
@@ -159,10 +165,7 @@ class LLM:
 
         Returns
         -------
-        response (str) : the generated response
-        tokens (int) : the number of tokens in the response
-        total_time (float) : the total time taken to generate the response
-        tokens_per_second (float) : the number of tokens generated per second
+        benchmark (Benchmark) : the benchmark results
         """
         message: Message = {
             'role': 'user',
