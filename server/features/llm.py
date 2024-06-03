@@ -90,7 +90,7 @@ class LLM:
         )
 
     @classmethod
-    def generate(cls, tokens_list: Iterable[list[str]]) -> Generator[str, None, None]:
+    async def generate(cls, tokens_list: Iterable[list[str]]) -> Generator[str, None, None]:
         """
         Summary
         -------
@@ -119,7 +119,7 @@ class LLM:
         )
 
     @classmethod
-    def generate_from_instruction(cls, instruction: str) -> Generator[str, None, None]:
+    async def generate_from_instruction(cls, instruction: str) -> Generator[str, None, None]:
         """
         Summary
         -------
@@ -137,10 +137,10 @@ class LLM:
 
         prompt = cls.tokeniser.apply_chat_template([message], add_generation_prompt=True, tokenize=False)
 
-        return cls.generate([cls.tokeniser(prompt).tokens()])
+        return await cls.generate([cls.tokeniser(prompt).tokens()])
 
     @classmethod
-    def benchmark(cls, instruction: str) -> Benchmark:
+    async def benchmark(cls, instruction: str) -> Benchmark:
         """
         Summary
         -------
@@ -161,7 +161,7 @@ class LLM:
         tokenised_prompt = cls.tokeniser(prompt).tokens()
 
         start = process_time()
-        response = ''.join(cls.generate([tokenised_prompt]))
+        response = ''.join(await cls.generate([tokenised_prompt]))
         total_time = process_time() - start
 
         output_tokens = cls.tokeniser(response).tokens()

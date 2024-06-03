@@ -4,10 +4,10 @@ from server.schemas.v1 import Benchmark, Generate
 
 
 @v1.post('/benchmark')
-def benchmark(request: Generate) -> Benchmark:
+async def benchmark(request: Generate) -> Benchmark:
     """
     Summary
     -------
     the `/benchmark` route
     """
-    return Benchmark(**LLM.benchmark(request.instruction))
+    return Benchmark(**await LLM.benchmark(request.instruction))
