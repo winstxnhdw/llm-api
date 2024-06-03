@@ -12,7 +12,4 @@ def generate(request: Generate) -> StreamingResponse:
     -------
     the `/generate` route translates an input from a source language to a target language
     """
-    return StreamingResponse(
-        LLM.generate_from_instruction(request.instruction),
-        media_type='text/event-stream'
-    )
+    return StreamingResponse(LLM.generate_from_instruction(request.instruction), media_type='text/event-stream')

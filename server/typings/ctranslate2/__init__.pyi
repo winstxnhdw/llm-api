@@ -29,19 +29,14 @@ class GenerationStepResult(Generic[LogProbability]):
     token: str
     token_id: int
 
-
 class GenerationResult(Generic[Scores]):
     scores: Scores
     sequences: list[list[str]]
     sequences_ids: list[list[int]]
 
-
 class AsyncGenerationResult(Generic[Scores]):
-
     def done(self) -> bool: ...
-
     def result(self) -> GenerationResult[Scores]: ...
-
 
 class Generator:
     device: Devices
@@ -56,10 +51,8 @@ class Generator:
         inter_threads: int = 1,
         intra_threads: int = 0,
         max_queued_batches: int = 0,
-        files: object = None
+        files: object = None,
     ) -> None: ...
-
-
     @overload
     def generate_batch(
         self,
@@ -91,8 +84,6 @@ class Generator:
         sampling_temperature: float = 1,
         callback: Callable[[GenerationStepResult], bool] | None = None,
     ) -> list[GenerationResult[list[Any]]]: ...
-
-
     @overload
     def generate_batch(
         self,
@@ -124,8 +115,6 @@ class Generator:
         sampling_temperature: float = 1,
         callback: Callable[[GenerationStepResult], bool] | None = None,
     ) -> list[GenerationResult[list[float]]]: ...
-
-
     @overload
     def generate_batch(
         self,
@@ -157,8 +146,6 @@ class Generator:
         sampling_temperature: float = 1,
         callback: Callable[[GenerationStepResult], bool] | None = None,
     ) -> list[AsyncGenerationResult[list[Any]]]: ...
-
-
     @overload
     def generate_batch(
         self,
@@ -190,8 +177,6 @@ class Generator:
         sampling_temperature: float = 1,
         callback: Callable[[GenerationStepResult], bool] | None = None,
     ) -> list[AsyncGenerationResult[list[float]]]: ...
-
-
     @overload
     def generate_iterable(
         self,
@@ -223,8 +208,6 @@ class Generator:
         sampling_temperature: float = 1,
         callback: Callable[[GenerationStepResult], bool] | None = None,
     ) -> Iterable[GenerationResult[list[Any]]]: ...
-
-
     @overload
     def generate_iterable(
         self,
@@ -256,8 +239,6 @@ class Generator:
         sampling_temperature: float = 1,
         callback: Callable[[GenerationStepResult], bool] | None = None,
     ) -> Iterable[GenerationResult[list[float]]]: ...
-
-
     @overload
     def generate_tokens(
         self,
@@ -279,8 +260,6 @@ class Generator:
         static_prompt: list[str] | None = None,
         cache_static_prompt: bool = True,
     ) -> Iterable[GenerationStepResult]: ...
-
-
     @overload
     def generate_tokens(
         self,
