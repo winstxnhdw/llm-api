@@ -4,7 +4,7 @@ from typing import Any, Callable, Generic, Iterable, Literal, overload
 
 from typing_extensions import TypeVar
 
-ComputeTypes = Literal[
+type ComputeTypes = Literal[
     'default',
     'auto',
     'int8',
@@ -16,7 +16,7 @@ ComputeTypes = Literal[
     'float32',
 ]
 
-Devices = Literal['cpu', 'cuda', 'auto']
+type Devices = Literal['cpu', 'cuda', 'auto']
 LogProbability = TypeVar('LogProbability', default=None, bound=float | None)
 Scores = TypeVar('Scores', bound=list[float])
 
@@ -184,7 +184,6 @@ class Generator:
         max_batch_size: int = 0,
         batch_type: str = 'examples',
         *,
-        asynchronous: Literal[False] = False,
         beam_size: int = 1,
         patience: float = 1,
         num_hypotheses: int = 1,
@@ -215,7 +214,6 @@ class Generator:
         max_batch_size: int = 0,
         batch_type: str = 'examples',
         *,
-        asynchronous: Literal[False] = False,
         beam_size: int = 1,
         patience: float = 1,
         num_hypotheses: int = 1,

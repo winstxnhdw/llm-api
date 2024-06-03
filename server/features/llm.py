@@ -108,6 +108,7 @@ class LLM:
             cls.tokeniser.decode(result.sequences_ids[0])
             for result in cls.generator.generate_iterable(
                 tokens_list,
+                batch_type='tokens',
                 repetition_penalty=1.2,
                 max_length=cls.max_generation_length,
                 static_prompt=cls.static_prompt,
