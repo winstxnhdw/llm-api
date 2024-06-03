@@ -33,6 +33,7 @@ version = "0.1.0"
 description = ""
 authors = ["winstxnhdw <you@example.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -44,7 +45,7 @@ gunicorn = "^22.0.0"
 uvicorn = "^0.29.0"
 httptools = "^0.6.1"
 supervisor = "^4.2.5"
-ctranslate2 = "^4.3.0"
+ctranslate2 = "^4.2.1"
 transformers = "^4.41.1"
 sentencepiece = "^0.2.0"
 protobuf = "^5.27.0"
