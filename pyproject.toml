@@ -48,11 +48,11 @@ supervisor = "^4.2.5"
 ctranslate2 = "^4.2.1"
 transformers = "^4.41.1"
 sentencepiece = "^0.2.0"
-protobuf = "^5.27.0"
+protobuf = "^5.27.1"
 jinja2 = "^3.1.4"
 
 [tool.poetry.group.dev.dependencies]
 pyright = "^1.1.366"
-pylint = "^3.2.2"
+pylint = "^3.2.3"
 pytest = "^8.2.2"
 ruff = "^0.4.8"
