@@ -1,8 +1,8 @@
 # llm-api
 
 [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/PyCQA/pylint)
+[![build.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/main.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/main.yml)
 [![deploy.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/deploy.yml)
-[![build.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/build.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/build.yml)
 [![formatter.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/formatter.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/formatter.yml)
 [![warmer.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/warmer.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/warmer.yml)
 [![dependabot.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/dependabot.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/dependabot.yml)
