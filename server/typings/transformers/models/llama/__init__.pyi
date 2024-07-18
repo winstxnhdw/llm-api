@@ -3,7 +3,6 @@
 from os import PathLike
 from typing import Any, Literal, Mapping, Self, Sequence, overload
 
-from transformers.pipelines.conversational import Conversation
 from transformers.tokenization_utils_base import (
     BatchEncoding,
     PreTokenizedInput,
@@ -46,7 +45,7 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
         force_download: bool = False,
         local_files_only: bool = False,
         token: str | bool | None = None,
-        revision: str = 'main',
+        revision: str = "main",
         trust_remote_code: bool = False,
         **kwargs: Any,
     ) -> Self: ...
@@ -54,6 +53,8 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     def apply_chat_template(
         self,
         conversation: Sequence[Mapping[str, object]],
+        tools: list[dict[Any, Any]] | None = None,
+        documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
         tokenize: Literal[False] = False,
@@ -69,6 +70,8 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     def apply_chat_template(
         self,
         conversation: Sequence[Mapping[str, object]],
+        tools: list[dict[Any, Any]] | None = None,
+        documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
         tokenize: Literal[True] = True,
@@ -84,6 +87,8 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     def apply_chat_template(
         self,
         conversation: Sequence[Sequence[Mapping[str, object]]],
+        tools: list[dict[Any, Any]] | None = None,
+        documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
         tokenize: Literal[True] = True,
@@ -98,7 +103,9 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     @overload
     def apply_chat_template(
         self,
-        conversation: Sequence[Mapping[str, object]] | Sequence[Sequence[Mapping[str, object]]] | Conversation,
+        conversation: Sequence[Mapping[str, object]] | Sequence[Sequence[Mapping[str, object]]],
+        tools: list[dict[Any, Any]] | None = None,
+        documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
         tokenize: bool = True,
@@ -112,7 +119,9 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     ) -> BatchEncoding: ...
     def apply_chat_template(
         self,
-        conversation: Sequence[Mapping[str, object]] | Sequence[Sequence[Mapping[str, object]]] | Conversation,
+        conversation: Sequence[Mapping[str, object]] | Sequence[Sequence[Mapping[str, object]]],
+        tools: list[dict[Any, Any]] | None = None,
+        documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
         tokenize: bool = True,
