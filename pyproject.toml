@@ -52,7 +52,7 @@ protobuf = "^5.27.3"
 jinja2 = "^3.1.4"
 
 [tool.poetry.group.dev.dependencies]
-pyright = "^1.1.375"
+pyright = "^1.1.376"
 pylint = "^3.2.6"
 pytest = "^8.3.2"
 ruff = "^0.5.7"
