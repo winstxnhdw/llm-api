@@ -83,7 +83,7 @@ def initialise() -> Framework:
     ------
     app (Framework) : an extended FastAPI instance
     """
-    app = Framework(lifespan=lifespans, root_path=Config.server_root_path)
+    app = Framework(lifespan=lifespans)
     app.initialise_routes(join('server', 'api'))
     app.include_router(v1)
     app.add_middleware(LoggingMiddleware)
