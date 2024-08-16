@@ -38,5 +38,5 @@ class Config(BaseSettings):
     """
 
     server_port: int = 49494
-    server_root_path: str = '/api'
+    server_root_path: str = '/'
     worker_count: int = 1
