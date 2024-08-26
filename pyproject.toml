@@ -38,7 +38,7 @@ package-mode = false
 [tool.poetry.dependencies]
 python = "^3.12"
 typing-extensions = "^4.12.2"
-fastapi = "^0.112.1"
+fastapi = "^0.112.2"
 pydantic-settings = "^2.4.0"
 uvloop = "^0.20.0"
 gunicorn = "^23.0.0"
