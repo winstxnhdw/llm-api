@@ -1,3 +1,2 @@
-from fastapi import APIRouter
-
-v1 = APIRouter(prefix='/v1', tags=['v1'])
+from server.api.v1.chat import ChatController as ChatController
+from server.api.v1.health import health as health

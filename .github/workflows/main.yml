@@ -7,10 +7,7 @@ on:
       - .github/workflows/build.yml
       - .dockerignore
       - Dockerfile.build
-      - poetry.lock
       - pyproject.toml
-      - supervisord.conf
-      - Caddyfile
       - '**.py'
 
 jobs:

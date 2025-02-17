@@ -1,7 +1,7 @@
-from pydantic import BaseModel
+from msgspec import Struct
 
 
-class Benchmark(BaseModel):
+class Benchmark(Struct):
     """
     Summary
     -------
@@ -11,7 +11,7 @@ class Benchmark(BaseModel):
     ----------
     response (str) : the response
     tokens (int) : the number of tokens generated
-    total_time (float) : the total time taken to generate the response
+    total_time (float) : the total time taken to generate the response in seconds
     tokens_per_second (float) : the number of tokens generated per second
     """
 

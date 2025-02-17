@@ -1,57 +1,34 @@
-[tool.pylint.format]
-good-names = ["x", "y", "z", "id", "ok"]
-
-[tool.pylint.messages_control]
-disable = [
-  "missing-module-docstring",
-  "no-name-in-module",
-  "useless-import-alias",
-  "line-too-long",
-  "too-many-arguments",
-  "too-few-public-methods",
-  "too-many-instance-attributes",
+[project]
+name = "llm-api"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "~=3.12"
+dependencies = [
+    "ctranslate2>=4.5.0",
+    "granian>=1.7.6",
+    "litestar>=2.14.0",
+    "msgspec>=0.19.0",
+    "picologging>=0.9.3",
+    "pydantic-settings>=2.7.1",
+    "transformers>=4.48.3",
+    "uvloop>=0.21.0",
 ]
 
-[tool.pyright]
-stubPath = "server/typings"
-reportUnknownVariableType = false
-reportUnknownMemberType = false
-reportMissingTypeStubs = false
+[dependency-groups]
+dev = ["nodejs-wheel-binaries>=22.14.0", "pyright>=1.1.394", "ruff>=0.9.6"]
 
 [tool.ruff]
 line-length = 120
 
-[tool.ruff.format]
-quote-style = "single"
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = ["D", "TC", "ANN001", "PLC0414", "INP001", "S104"]
 
-[tool.pytest.ini_options]
-pythonpath = ["."]
-
-[tool.poetry]
-name = "llm-api"
-version = "0.1.0"
-description = ""
-authors = ["winstxnhdw <you@example.com>"]
-readme = "README.md"
-package-mode = false
-
-[tool.poetry.dependencies]
-python = "^3.12"
-typing-extensions = "^4.12.2"
-fastapi = "^0.112.2"
-pydantic-settings = "^2.4.0"
-uvloop = "^0.20.0"
-gunicorn = "^23.0.0"
-uvicorn = "^0.30.6"
-httptools = "^0.6.1"
-ctranslate2 = "^4.3.1"
-transformers = "^4.44.2"
-sentencepiece = "^0.2.0"
-protobuf = "^5.27.4"
-jinja2 = "^3.1.4"
-
-[tool.poetry.group.dev.dependencies]
-pyright = "^1.1.377"
-pylint = "^3.2.6"
-pytest = "^8.3.2"
-ruff = "^0.6.2"
+[tool.pyright]
+stubPath = "server/typings"
+typeCheckingMode = "strict"
+reportUnknownVariableType = false
+reportUnknownMemberType = false
+reportMissingTypeStubs = false
+reportPrivateUsage = false

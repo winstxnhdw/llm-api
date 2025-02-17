@@ -1,7 +1,8 @@
-# pylint: skip-file
+# ruff: noqa: ANN401
 
+from collections.abc import Callable, Sequence
 from os import PathLike
-from typing import Any, Literal, Mapping, Self, Sequence, overload
+from typing import Any, Literal, Self, overload
 
 from transformers.tokenization_utils_base import (
     BatchEncoding,
@@ -12,13 +13,15 @@ from transformers.tokenization_utils_base import (
 from transformers.tokenization_utils_fast import PreTrainedTokenizerFast
 from transformers.utils import PaddingStrategy, TensorType
 
+from server.typedefs import ListOrTuple, Message
+
 class LlamaTokenizerFast(PreTrainedTokenizerFast):
     def __call__(
         self,
-        text: str | PreTokenizedInput | list[PreTokenizedInput] | None = None,
-        text_pair: TextInput | PreTokenizedInput | list[PreTokenizedInput] | None = None,
-        text_target: TextInput | PreTokenizedInput | list[PreTokenizedInput] | None = None,
-        text_pair_target: TextInput | PreTokenizedInput | list[PreTokenizedInput] | None = None,
+        text: TextInput | PreTokenizedInput | list[TextInput] | list[PreTokenizedInput] | None = None,
+        text_pair: TextInput | PreTokenizedInput | list[TextInput] | list[PreTokenizedInput] | None = None,
+        text_target: TextInput | PreTokenizedInput | list[TextInput] | list[PreTokenizedInput] | None = None,
+        text_pair_target: TextInput | PreTokenizedInput | list[TextInput] | list[PreTokenizedInput] | None = None,
         add_special_tokens: bool = True,
         padding: bool | str | PaddingStrategy = False,
         truncation: bool | str | TruncationStrategy | None = None,
@@ -26,6 +29,7 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
         stride: int = 0,
         is_split_into_words: bool = False,
         pad_to_multiple_of: int | None = None,
+        padding_side: bool | None = None,
         return_tensors: str | TensorType | None = None,
         return_token_type_ids: bool | None = None,
         return_attention_mask: bool | None = None,
@@ -52,11 +56,12 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     @overload
     def apply_chat_template(
         self,
-        conversation: Sequence[Mapping[str, object]],
+        conversation: ListOrTuple[Message],
         tools: list[dict[Any, Any]] | None = None,
         documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
+        continue_final_message: bool = False,
         tokenize: Literal[False] = False,
         padding: bool = False,
         truncation: bool = False,
@@ -70,12 +75,13 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     @overload
     def apply_chat_template(
         self,
-        conversation: Sequence[Mapping[str, object]],
+        conversation: ListOrTuple[ListOrTuple[Message]],
         tools: list[dict[Any, Any]] | None = None,
         documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
-        tokenize: Literal[True] = True,
+        continue_final_message: bool = False,
+        tokenize: Literal[False] = False,
         padding: bool = False,
         truncation: bool = False,
         max_length: int | None = None,
@@ -84,50 +90,15 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
         return_assistant_tokens_mask: bool = False,
         tokenizer_kwargs: dict[str, Any] | None = None,
         **kwargs: Any,
-    ) -> list[int]: ...
-    @overload
+    ) -> list[str]: ...
     def apply_chat_template(
         self,
-        conversation: Sequence[Sequence[Mapping[str, object]]],
-        tools: list[dict[Any, Any]] | None = None,
+        conversation: Sequence[dict[str, str]] | Sequence[Sequence[dict[str, str]]],
+        tools: list[dict[Any, Any] | Callable[..., Any]] | None = None,
         documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
         add_generation_prompt: bool = False,
-        tokenize: Literal[True] = True,
-        padding: bool = False,
-        truncation: bool = False,
-        max_length: int | None = None,
-        return_tensors: str | TensorType | None = None,
-        return_dict: Literal[False] = False,
-        return_assistant_tokens_mask: bool = False,
-        tokenizer_kwargs: dict[str, Any] | None = None,
-        **kwargs: Any,
-    ) -> list[list[int]]: ...
-    @overload
-    def apply_chat_template(
-        self,
-        conversation: Sequence[Mapping[str, object]] | Sequence[Sequence[Mapping[str, object]]],
-        tools: list[dict[Any, Any]] | None = None,
-        documents: list[dict[str, str]] | None = None,
-        chat_template: str | None = None,
-        add_generation_prompt: bool = False,
-        tokenize: bool = True,
-        padding: bool = False,
-        truncation: bool = False,
-        max_length: int | None = None,
-        return_tensors: str | TensorType | None = None,
-        return_dict: Literal[True] = True,
-        return_assistant_tokens_mask: bool = False,
-        tokenizer_kwargs: dict[str, Any] | None = None,
-        **kwargs: Any,
-    ) -> BatchEncoding: ...
-    def apply_chat_template(
-        self,
-        conversation: Sequence[Mapping[str, object]] | Sequence[Sequence[Mapping[str, object]]],
-        tools: list[dict[Any, Any]] | None = None,
-        documents: list[dict[str, str]] | None = None,
-        chat_template: str | None = None,
-        add_generation_prompt: bool = False,
+        continue_final_message: bool = False,
         tokenize: bool = True,
         padding: bool = False,
         truncation: bool = False,

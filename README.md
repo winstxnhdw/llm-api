@@ -1,11 +1,9 @@
 # llm-api
 
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/PyCQA/pylint)
 [![build.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/main.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/main.yml)
 [![deploy.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/deploy.yml)
 [![formatter.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/formatter.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/formatter.yml)
 [![warmer.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/warmer.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/warmer.yml)
-[![dependabot.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/dependabot.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/dependabot.yml)
 
 [![Open in Spaces](https://huggingface.co/datasets/huggingface/badges/raw/main/open-in-hf-spaces-md-dark.svg)](https://huggingface.co/spaces/winstxnhdw/llm-api)
 [![Open a Pull Request](https://huggingface.co/datasets/huggingface/badges/raw/main/open-a-pr-md-dark.svg)](https://github.com/winstxnhdw/llm-api/compare)
@@ -30,10 +28,10 @@ curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/generate' \
 First, install the required dependencies for your editor with the following.
 
 ```bash
-poetry install
+uv sync
 ```
 
-Now, you can access the Swagger UI at [localhost:7860/api/docs](http://localhost:7860/api/docs) after spinning the server up locally with the following.
+You can access the Swagger UI at [localhost:7860/api/docs](http://localhost:7860/api/docs) after spinning the server up locally with the following.
 
 ```bash
 docker build -f Dockerfile.build -t llm-api .
