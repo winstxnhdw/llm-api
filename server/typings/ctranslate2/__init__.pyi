@@ -6,20 +6,20 @@ from typing import Any, Generic, Literal, overload
 from typing_extensions import TypeVar
 
 type ComputeTypes = Literal[
-    "default",
-    "auto",
-    "int8",
-    "int8_float16",
-    "int8_bfloat16",
-    "int16",
-    "float16",
-    "bfloat16",
-    "float32",
+    'default',
+    'auto',
+    'int8',
+    'int8_float16',
+    'int8_bfloat16',
+    'int16',
+    'float16',
+    'bfloat16',
+    'float32',
 ]
 
-type Devices = Literal["cpu", "cuda", "auto"]
-LogProbability = TypeVar("LogProbability", default=None, bound=float | None)
-Scores = TypeVar("Scores", bound=list[float])
+type Devices = Literal['cpu', 'cuda', 'auto']
+LogProbability = TypeVar('LogProbability', default=None, bound=float | None)
+Scores = TypeVar('Scores', bound=list[float])
 
 class GenerationStepResult(Generic[LogProbability]):
     batch_id: int
@@ -45,10 +45,10 @@ class Generator:
     def __init__(
         self,
         model_path: str,
-        device: Devices = "cpu",
+        device: Devices = 'cpu',
         *,
         device_index: int | list[int] = 0,
-        compute_type: ComputeTypes = "default",
+        compute_type: ComputeTypes = 'default',
         inter_threads: int = 1,
         intra_threads: int = 0,
         max_queued_batches: int = 0,
@@ -60,7 +60,7 @@ class Generator:
         start_tokens: list[list[str]],
         *,
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         asynchronous: Literal[False] = False,
         beam_size: int = 1,
         patience: float = 1,
@@ -91,7 +91,7 @@ class Generator:
         start_tokens: list[list[str]],
         *,
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         asynchronous: Literal[False] = False,
         beam_size: int = 1,
         patience: float = 1,
@@ -122,7 +122,7 @@ class Generator:
         start_tokens: list[list[str]],
         *,
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         asynchronous: Literal[True],
         beam_size: int = 1,
         patience: float = 1,
@@ -153,7 +153,7 @@ class Generator:
         start_tokens: list[list[str]],
         *,
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         asynchronous: Literal[True],
         beam_size: int = 1,
         patience: float = 1,
@@ -183,7 +183,7 @@ class Generator:
         self,
         start_tokens: Iterable[list[str]],
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         *,
         beam_size: int = 1,
         patience: float = 1,
@@ -213,7 +213,7 @@ class Generator:
         self,
         start_tokens: Iterable[list[str]],
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         *,
         beam_size: int = 1,
         patience: float = 1,
@@ -243,7 +243,7 @@ class Generator:
         self,
         prompt: list[str] | list[list[str]],
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         *,
         max_length: int = 512,
         min_length: int = 0,
@@ -264,7 +264,7 @@ class Generator:
         self,
         prompt: list[str] | list[list[str]],
         max_batch_size: int = 0,
-        batch_type: str = "examples",
+        batch_type: str = 'examples',
         *,
         max_length: int = 512,
         min_length: int = 0,

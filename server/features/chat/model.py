@@ -10,7 +10,7 @@ from server.typedefs import ListOrTuple, Message
 
 class QueryLengthError(Exception):
     def __init__(self) -> None:
-        super().__init__("The minimum query length cannot be greater than the maximum query length!")
+        super().__init__('The minimum query length cannot be greater than the maximum query length!')
 
 
 class ChatModel:
@@ -32,13 +32,13 @@ class ChatModel:
     """
 
     __slots__ = (
-        "generator",
-        "max_context_length",
-        "max_generation_length",
-        "max_query_length",
-        "min_query_length",
-        "static_prompt",
-        "tokeniser",
+        'generator',
+        'max_context_length',
+        'max_generation_length',
+        'max_query_length',
+        'min_query_length',
+        'static_prompt',
+        'tokeniser',
     )
 
     def __init__(
@@ -98,12 +98,12 @@ class ChatModel:
         """
         static_prompts: list[Message] = [
             {
-                "role": "user",
-                "content": static_user_prompt,
+                'role': 'user',
+                'content': static_user_prompt,
             },
             {
-                "role": "assistant",
-                "content": static_assistant_prompt,
+                'role': 'assistant',
+                'content': static_assistant_prompt,
             },
         ]
 
@@ -176,12 +176,12 @@ def get_chat_model() -> ChatModel:
     -------
     model (ChatModel) : the language model
     """
-    model_path = snapshot_download("winstxnhdw/Llama-3.2-1B-Instruct-ct2-int8")
+    model_path = snapshot_download('winstxnhdw/Llama-3.2-1B-Instruct-ct2-int8')
     tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True, legacy=False)
     generator = Generator(
         model_path,
-        "cuda" if Config.use_cuda else "cpu",
-        compute_type="auto",
+        'cuda' if Config.use_cuda else 'cpu',
+        compute_type='auto',
         inter_threads=Config.chat_model_threads,
         max_queued_batches=-1,
     )

@@ -12,8 +12,8 @@ def main() -> None:
     programmatically run the server with Granian
     """
     granian = Granian(
-        f"{app.__module__}:{app.__name__}",
-        "0.0.0.0",
+        f'{app.__module__}:{app.__name__}',
+        '0.0.0.0',
         Config.server_port,
         Interfaces.ASGI,
         Config.worker_count,
@@ -27,5 +27,5 @@ def main() -> None:
     granian.serve()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -15,7 +15,7 @@ class ChatController(Controller):
     Litestar controller for chat endpoints
     """
 
-    path = "/chat"
+    path = '/chat'
 
     @post(status_code=HTTP_200_OK, sync_to_thread=True)
     def query(self, state: AppState, data: Query) -> Answer:
@@ -25,13 +25,13 @@ class ChatController(Controller):
         the `/chat` route provides an endpoint for querying the chat model
         """
         message: Message = {
-            "role": "user",
-            "content": data.query,
+            'role': 'user',
+            'content': data.query,
         }
 
-        return Answer("".join(answer) if (answer := state.chat.query([message])) else "Max query length exceeded!")
+        return Answer(''.join(answer) if (answer := state.chat.query([message])) else 'Max query length exceeded!')
 
-    @post("/stream", sync_to_thread=True)
+    @post('/stream', sync_to_thread=True)
     def query_stream(self, state: AppState, data: Query, event_type: str | None = None) -> ServerSentEvent:
         """
         Summary
@@ -39,17 +39,17 @@ class ChatController(Controller):
         the `/chat/stream` route provides an SSE endpoint for querying the chat model
         """
         message: Message = {
-            "role": "user",
-            "content": data.query,
+            'role': 'user',
+            'content': data.query,
         }
 
         return ServerSentEvent(
-            answer if (answer := state.chat.query([message])) else "Max query length exceeded!",
+            answer if (answer := state.chat.query([message])) else 'Max query length exceeded!',
             event_type=event_type,
             status_code=HTTP_200_OK,
         )
 
-    @post("/benchmark", status_code=HTTP_200_OK, sync_to_thread=True)
+    @post('/benchmark', status_code=HTTP_200_OK, sync_to_thread=True)
     def benchmark(self, state: AppState, data: Query) -> Benchmark:
         """
         Summary
@@ -57,17 +57,17 @@ class ChatController(Controller):
         the `/chat/benchmark` route provides an endpoint for benchmarking the chat model
         """
         message: Message = {
-            "role": "user",
-            "content": data.query,
+            'role': 'user',
+            'content': data.query,
         }
 
         start = perf_counter_ns()
-        answer = list(state.chat.query([message]) or ["Max query length exceeded!"])
+        answer = list(state.chat.query([message]) or ['Max query length exceeded!'])
         total_time = (perf_counter_ns() - start) / 1e9
         tokens = len(answer)
 
         return Benchmark(
-            response="".join(answer),
+            response=''.join(answer),
             tokens=tokens,
             total_time=total_time,
             tokens_per_second=tokens / total_time,

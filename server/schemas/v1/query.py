@@ -14,4 +14,4 @@ class Query(Struct):
     query (str) : the query
     """
 
-    query: Annotated[str, Meta(examples=["What is the definition of ADHD?"])]
+    query: Annotated[str, Meta(examples=['What is the definition of ADHD?'])]

@@ -21,10 +21,10 @@ def exception_handler(_, exception: Exception) -> Response[dict[str, str]]:
     request (Request) : the request
     exception (Exception) : the exception
     """
-    getLogger("custom.access").error("", exc_info=exception)
+    getLogger('custom.access').error('', exc_info=exception)
 
     return Response(
-        content={"detail": "Internal Server Error"},
+        content={'detail': 'Internal Server Error'},
         status_code=HTTP_500_INTERNAL_SERVER_ERROR,
     )
 
@@ -36,9 +36,9 @@ def app() -> Litestar:
     the Litestar application
     """
     openapi_config = OpenAPIConfig(
-        title="llm-api",
-        version="1.0.0",
-        description="A fast CPU-based API for LLMs",
+        title='llm-api',
+        version='1.0.0',
+        description='A fast CPU-based API for LLMs',
         use_handler_docstrings=True,
         servers=[Server(url=Config.server_root_path)],
     )
