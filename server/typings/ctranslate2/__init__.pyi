@@ -1,6 +1,7 @@
 # pylint: skip-file
 
-from typing import Any, Callable, Generic, Iterable, Literal, overload
+from collections.abc import Callable, Iterable
+from typing import Any, Generic, Literal, overload
 
 from typing_extensions import TypeVar
 
