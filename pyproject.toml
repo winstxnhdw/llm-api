@@ -36,6 +36,9 @@ line-length = 120
 select = ["ALL"]
 ignore = ["D", "TC", "ANN001", "PLC0414", "INP001", "S104", "PYI001", "COM812"]
 
+[tool.ruff.format]
+quote-style = "single"
+
 [tool.pyright]
 stubPath = "server/typings"
 typeCheckingMode = "strict"
