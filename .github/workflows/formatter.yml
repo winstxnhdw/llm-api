@@ -5,6 +5,7 @@ on:
     paths:
       - .github/workflows/formatter.yml
       - pyproject.toml
+      - uv.lock
       - '**.py'
 
 permissions:
