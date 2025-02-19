@@ -272,7 +272,7 @@ wheels = [
 [[package]]
 name = "llm-api"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "ctranslate2" },
     { name = "granian" },

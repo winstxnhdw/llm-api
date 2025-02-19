@@ -1,51 +1,31 @@
-from logging import getLogger
+from granian import Granian
+from granian.constants import Interfaces
 
-from litestar import Litestar, Response
-from litestar.openapi import OpenAPIConfig
-from litestar.openapi.spec import Server
-from litestar.status_codes import HTTP_500_INTERNAL_SERVER_ERROR
-
-from server.api.v1 import ChatController, health
+from server.app import app
 from server.config import Config
-from server.lifespans import chat_model
 
 
-def exception_handler(_, exception: Exception) -> Response[dict[str, str]]:
+def main() -> None:
     """
     Summary
     -------
-    the Litestar exception handler
-
-    Parameters
-    ----------
-    request (Request) : the request
-    exception (Exception) : the exception
+    programmatically run the server with Granian
     """
-    getLogger("custom.access").error("", exc_info=exception)
-
-    return Response(
-        content={"detail": "Internal Server Error"},
-        status_code=HTTP_500_INTERNAL_SERVER_ERROR,
+    granian = Granian(
+        f"{app.__module__}:{app.__name__}",
+        "0.0.0.0",
+        Config.server_port,
+        Interfaces.ASGI,
+        Config.worker_count,
+        log_access=True,
+        log_access_format='[%(time)s] %(status)d "%(method)s %(path)s %(protocol)s" %(addr)s in %(dt_ms).2f ms',
+        url_path_prefix=Config.server_root_path,
+        factory=True,
+        reload=False,
     )
 
+    granian.serve()
 
-def app() -> Litestar:
-    """
-    Summary
-    -------
-    the Litestar application
-    """
-    openapi_config = OpenAPIConfig(
-        title="llm-api",
-        version="1.0.0",
-        description="A fast CPU-based API for LLMs",
-        use_handler_docstrings=True,
-        servers=[Server(url=Config.server_root_path)],
-    )
 
-    return Litestar(
-        openapi_config=openapi_config,
-        exception_handlers={HTTP_500_INTERNAL_SERVER_ERROR: exception_handler},
-        route_handlers=[ChatController, health],
-        lifespan=[chat_model],
-    )
+if __name__ == "__main__":
+    main()
