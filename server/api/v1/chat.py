@@ -5,8 +5,7 @@ from litestar.response import ServerSentEvent
 from litestar.status_codes import HTTP_200_OK
 
 from server.schemas.v1 import Answer, Benchmark, Query
-from server.state import AppState
-from server.typedefs import Message
+from server.typedefs import AppState, Message
 
 
 class ChatController(Controller):
