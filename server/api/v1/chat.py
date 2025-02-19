@@ -18,8 +18,8 @@ class ChatController(Controller):
 
     path = "/chat"
 
-    @post(status_code=HTTP_200_OK)
-    async def query(self, state: AppState, data: Query) -> Answer:
+    @post(status_code=HTTP_200_OK, sync_to_thread=True)
+    def query(self, state: AppState, data: Query) -> Answer:
         """
         Summary
         -------
@@ -32,8 +32,8 @@ class ChatController(Controller):
 
         return Answer("".join(answer) if (answer := state.chat.query([message])) else "Max query length exceeded!")
 
-    @post("/stream")
-    async def query_stream(self, state: AppState, data: Query, event_type: str | None = None) -> ServerSentEvent:
+    @post("/stream", sync_to_thread=True)
+    def query_stream(self, state: AppState, data: Query, event_type: str | None = None) -> ServerSentEvent:
         """
         Summary
         -------
@@ -50,12 +50,12 @@ class ChatController(Controller):
             status_code=HTTP_200_OK,
         )
 
-    @post("/benchmark", status_code=HTTP_200_OK)
-    async def benchmark(self, state: AppState, data: Query) -> Benchmark:
+    @post("/benchmark", status_code=HTTP_200_OK, sync_to_thread=True)
+    def benchmark(self, state: AppState, data: Query) -> Benchmark:
         """
         Summary
         -------
-        the `/chat/benchmarj` route provides an endpoint for benchmarking the chat model
+        the `/chat/benchmark` route provides an endpoint for benchmarking the chat model
         """
         message: Message = {
             "role": "user",
