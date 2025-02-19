@@ -4,16 +4,18 @@ on:
   push:
     branches: main
     paths:
-      - .github/workflows/build.yml
+      - .github/workflows/main.yml
       - .dockerignore
       - Dockerfile.build
       - pyproject.toml
+      - uv.lock
       - '**.py'
 
 jobs:
   test:
-    uses: winstxnhdw/actions/.github/workflows/python.yml@main
+    uses: winstxnhdw/actions/.github/workflows/uv.yml@main
     with:
+      python-version: 3.12
       disable-test: true
 
   build:
