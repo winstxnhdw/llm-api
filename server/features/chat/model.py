@@ -79,7 +79,7 @@ class ChatModel:
         tokens (list[str]) : the encoded tokens
         """
         prompt = self.tokeniser.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
-        return self.tokeniser(prompt)._encodings.tokens  # pyright: ignore [reportOptionalSubscript. reportAssignmentType]  # noqa: SLF001
+        return self.tokeniser(prompt)._encodings[0].tokens  # pyright: ignore [reportOptionalSubscript. reportAssignmentType]  # noqa: SLF001
 
     def set_static_prompt(self, static_user_prompt: str, static_assistant_prompt: str) -> bool:
         """
@@ -155,11 +155,8 @@ class ChatModel:
         """
         generator = self.generator.generate_tokens(
             tokens,
-            repetition_penalty=1.2,
             max_length=self.max_generation_length,
             static_prompt=self.static_prompt,
-            sampling_topp=0.9,
-            sampling_temperature=0.9,
         )
 
         return (
@@ -180,7 +177,7 @@ def get_chat_model() -> ChatModel:
     model (ChatModel) : the language model
     """
     model_path = snapshot_download("winstxnhdw/Llama-3.2-1B-Instruct-ct2-int8")
-    tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True, legacy=False)
+    tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True)
     generator = Generator(
         model_path,
         "cuda" if Config.use_cuda else "cpu",
@@ -190,7 +187,7 @@ def get_chat_model() -> ChatModel:
     )
 
     min_query_length = 64
-    max_context_length = 4096
+    max_context_length = 131072
     max_generation_length = 1024
 
     return ChatModel(generator, tokeniser, min_query_length, max_context_length, max_generation_length)
