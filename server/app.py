@@ -1,11 +1,11 @@
 from logging import getLogger
 
-from litestar import Litestar, Response
+from litestar import Litestar, Response, Router
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.spec import Server
 from litestar.status_codes import HTTP_500_INTERNAL_SERVER_ERROR
 
-from server.api.v1 import ChatController, health
+from server.api import v1
 from server.config import Config
 from server.lifespans import chat_model
 
@@ -38,14 +38,16 @@ def app() -> Litestar:
     openapi_config = OpenAPIConfig(
         title='llm-api',
         version='1.0.0',
-        description='A fast CPU-based API for LLMs',
+        description='A performant CPU-based API for LLMs using CTranslate2, hosted on Hugging Face Spaces.',
         use_handler_docstrings=True,
         servers=[Server(url=Config.server_root_path)],
     )
 
+    v1_router = Router('/v1', tags=['v1'], route_handlers=[v1.health, v1.ChatController])
+
     return Litestar(
         openapi_config=openapi_config,
         exception_handlers={HTTP_500_INTERNAL_SERVER_ERROR: exception_handler},
-        route_handlers=[ChatController, health],
+        route_handlers=[v1_router],
         lifespan=[chat_model],
     )
