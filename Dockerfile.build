@@ -11,8 +11,8 @@ FROM python:3.12-slim AS python-builder
 WORKDIR /home/user
 
 ENV UV_COMPILE_BYTECODE=1
-ENV UV_NO_CACHE=1
 ENV UV_LINK_MODE=copy
+ENV UV_NO_CACHE=1
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 COPY pyproject.toml uv.lock ./
@@ -28,15 +28,15 @@ FROM python:3.12-slim
 
 ENV HOME=/home/user
 ENV PATH=$HOME/.venv/bin:$PATH
-ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 ENV HF_HUB_OFFLINE=1
 
 RUN useradd -m -u 1000 user
 
 USER user
 
-WORKDIR $HOME/app
+WORKDIR $HOME
 
 COPY --chown=user --from=model-builder  /root/.cache/huggingface $HOME/.cache/huggingface
 COPY --chown=user --from=python-builder $HOME/.venv .venv
