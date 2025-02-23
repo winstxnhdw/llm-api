@@ -11,8 +11,8 @@ dependencies = [
     "litestar>=2.14.0",
     "msgspec>=0.19.0",
     "picologging>=0.9.3",
-    "pydantic-settings>=2.7.1",
-    "transformers>=4.48.3",
+    "pydantic-settings>=2.8.0",
+    "transformers>=4.49.0",
     "uvloop>=0.21.0",
 ]
 
@@ -20,7 +20,7 @@ dependencies = [
 llm-api = "server:main"
 
 [dependency-groups]
-dev = ["nodejs-wheel-binaries>=22.14.0", "pyright>=1.1.394", "ruff>=0.9.6"]
+dev = ["nodejs-wheel-binaries>=22.14.0", "pyright>=1.1.394", "ruff>=0.9.7"]
 
 [build-system]
 requires = ["hatchling"]

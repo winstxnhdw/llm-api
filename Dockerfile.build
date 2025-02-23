@@ -6,7 +6,7 @@ RUN python -c \
     snapshot_download('winstxnhdw/Llama-3.2-1B-Instruct-ct2-int8');"
 
 
-FROM python:3.12-slim AS python-builder
+FROM python:3.13-slim@sha256:ae9f9ac89467077ed1efefb6d9042132d28134ba201b2820227d46c9effd3174 AS python-builder
 
 WORKDIR /home/user
 
@@ -24,7 +24,7 @@ COPY . .
 RUN uv sync --frozen --no-dev --no-editable
 
 
-FROM python:3.12-slim
+FROM python:3.13-slim@sha256:ae9f9ac89467077ed1efefb6d9042132d28134ba201b2820227d46c9effd3174
 
 ENV HOME=/home/user
 ENV PATH=$HOME/.venv/bin:$PATH
