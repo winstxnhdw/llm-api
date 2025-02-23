@@ -36,7 +36,7 @@ class Config(BaseSettings):
     """
 
     server_port: int = 49494
-    server_root_path: str = '/'
+    server_root_path: str = '/api'
     worker_count: int = 1
 
     chat_model_threads: int = 1

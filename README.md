@@ -15,7 +15,7 @@ A fast CPU-based API for Llama-3.2-1B-Instruct, hosted on Hugging Face Spaces. T
 Simply cURL the endpoint like in the following.
 
 ```bash
-curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/generate' \
+curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/chat' \
      -H 'Content-Type: application/json' \
      -d \
      '{
