@@ -176,7 +176,7 @@ def get_chat_model() -> ChatModel:
     -------
     model (ChatModel) : the language model
     """
-    model_path = snapshot_download('winstxnhdw/Llama-3.2-1B-Instruct-ct2-int8')
+    model_path = snapshot_download('winstxnhdw/Llama-3.2-3B-Instruct-ct2-int8')
     tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True, legacy=False)
     generator = Generator(
         model_path,
