@@ -1,4 +1,4 @@
-FROM ghcr.io/winstxnhdw/llm-api:main
+FROM ghcr.io/winstxnhdw/llm-api:main@sha256:a4f0629db6ea1f24b7c319fe8467d6e154e3f29a7fa8773c00e1c1b878e40c9a
 
 ENV SERVER_PORT=7860
 ENV OMP_NUM_THREADS=2

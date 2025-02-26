@@ -1,4 +1,4 @@
-FROM python:slim AS model-builder
+FROM python:slim@sha256:f3614d98f38b0525d670f287b0474385952e28eb43016655dd003d0e28cf8652 AS model-builder
 
 RUN pip install huggingface_hub
 RUN python -c \
@@ -14,7 +14,7 @@ ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 ENV UV_NO_CACHE=1
 
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:latest@sha256:8257f3d17fd04794feaf89d83b4ccca3b2eaa5501de9399fa53929843c0a5b55 /uv /uvx /bin/
 COPY pyproject.toml uv.lock ./
 
 RUN uv sync --frozen --no-dev --no-editable --no-install-project
