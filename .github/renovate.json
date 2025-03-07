@@ -1,3 +1,10 @@
 {
-    "extends": [ "github>winstxnhdw/renovate" ]
+	"extends": ["github>winstxnhdw/renovate"],
+	"packageRules": [
+		{
+			"matchDatasources": ["docker"],
+			"matchPackageNames": ["python"],
+			"enabled": false
+		}
+	]
 }
