@@ -29,7 +29,7 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
         stride: int = 0,
         is_split_into_words: bool = False,
         pad_to_multiple_of: int | None = None,
-        padding_side: bool | None = None,
+        padding_side: str | None = None,
         return_tensors: str | TensorType | None = None,
         return_token_type_ids: bool | None = None,
         return_attention_mask: bool | None = None,
