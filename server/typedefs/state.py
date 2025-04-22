@@ -11,7 +11,8 @@ class AppState(State):
 
     Attributes
     ----------
-    chat (ChatModel) : the LLM chat model
+    chat (ChatModel)
+        the LLM chat model
     """
 
     chat: ChatModel

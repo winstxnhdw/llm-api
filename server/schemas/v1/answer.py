@@ -3,7 +3,7 @@ from typing import Annotated
 from msgspec import Meta, Struct
 
 
-class Answer(Struct):
+class Answer(Struct, kw_only=True):
     """
     Summary
     -------
@@ -11,7 +11,8 @@ class Answer(Struct):
 
     Attributes
     ----------
-    answer (str) : the answer
+    answer (str)
+        the answer
     """
 
     answer: Annotated[

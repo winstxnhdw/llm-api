@@ -5,7 +5,7 @@ from litestar.response import ServerSentEvent
 from litestar.status_codes import HTTP_200_OK
 
 from server.schemas.v1 import Answer, Benchmark, Query
-from server.typedefs import AppState, Message
+from server.typedefs import AppState
 
 
 class ChatController(Controller):
@@ -24,12 +24,9 @@ class ChatController(Controller):
         -------
         the `/chat` route provides an endpoint for querying the chat model
         """
-        message: Message = {
-            'role': 'user',
-            'content': data.query,
-        }
-
-        return Answer(''.join(answer) if (answer := state.chat.query([message])) else 'Max query length exceeded!')
+        return Answer(
+            answer=''.join(answer) if (answer := state.chat.query(data.messages)) else 'Max query length exceeded!'
+        )
 
     @post('/stream', sync_to_thread=True)
     def query_stream(self, state: AppState, data: Query, event_type: str | None = None) -> ServerSentEvent:
@@ -38,13 +35,8 @@ class ChatController(Controller):
         -------
         the `/chat/stream` route provides an SSE endpoint for querying the chat model
         """
-        message: Message = {
-            'role': 'user',
-            'content': data.query,
-        }
-
         return ServerSentEvent(
-            answer if (answer := state.chat.query([message])) else 'Max query length exceeded!',
+            answer if (answer := state.chat.query(data.messages)) else 'Max query length exceeded!',
             event_type=event_type,
             status_code=HTTP_200_OK,
         )
@@ -56,13 +48,8 @@ class ChatController(Controller):
         -------
         the `/chat/benchmark` route provides an endpoint for benchmarking the chat model
         """
-        message: Message = {
-            'role': 'user',
-            'content': data.query,
-        }
-
         start = perf_counter_ns()
-        answer = list(state.chat.query([message]) or ['Max query length exceeded!'])
+        answer = list(state.chat.query(data.messages) or ['Max query length exceeded!'])
         total_time = (perf_counter_ns() - start) / 1e9
         tokens = len(answer)
 

@@ -1,7 +1,7 @@
 from msgspec import Struct
 
 
-class Benchmark(Struct):
+class Benchmark(Struct, kw_only=True):
     """
     Summary
     -------
@@ -9,10 +9,17 @@ class Benchmark(Struct):
 
     Attributes
     ----------
-    response (str) : the response
-    tokens (int) : the number of tokens generated
-    total_time (float) : the total time taken to generate the response in seconds
-    tokens_per_second (float) : the number of tokens generated per second
+    response (str)
+        the response
+
+    tokens (int)
+        the number of tokens generated
+
+    total_time (float)
+        the total time taken to generate the response in seconds
+
+    tokens_per_second (float)
+        the number of tokens generated per second
     """
 
     response: str

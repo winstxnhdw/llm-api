@@ -1,17 +1,24 @@
+from collections.abc import Sequence
 from typing import Annotated
 
 from msgspec import Meta, Struct
 
+from server.typedefs import Message
 
-class Query(Struct):
+
+class Query(Struct, kw_only=True, gc=False):
     """
     Summary
     -------
-    the query request
+    the query request schema
 
     Attributes
     ----------
-    query (str) : the query
+    messages (Sequence[Message])
+        the messages to send to the LLM
     """
 
-    query: Annotated[str, Meta(examples=['What is the definition of ADHD?'])]
+    messages: Annotated[
+        Sequence[Message],
+        Meta(examples=[{'role': 'user', 'content': 'What is the definition of ADHD?'}]),
+    ]

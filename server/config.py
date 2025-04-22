@@ -11,11 +11,13 @@ def singleton[T](callable_object: Callable[[], T]) -> T:
 
     Parameters
     ----------
-    callable_object (Callable[[], T]) : the callable to transform
+    callable_object (Callable[[], T])
+        the callable to transform
 
     Returns
     -------
-    instance (T) : the singleton
+    instance (T)
+        the singleton
     """
     return callable_object()
 
@@ -29,10 +31,17 @@ class Config(BaseSettings):
 
     Attributes
     ----------
-    port (int) : the port to run the server on
-    server_root_path (str) : the root path for the server
-    worker_count (int) : the number of workers to use
-    use_cuda (bool) : whether to use CUDA for inference
+    server_port (int)
+        the port to run the server on
+
+    server_root_path (str)
+        the root path for the server
+
+    worker_count (int)
+        the number of workers to use
+
+    use_cuda (bool)
+        whether to use CUDA for inference
     """
 
     server_port: int = 49494

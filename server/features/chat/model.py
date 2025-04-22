@@ -1,11 +1,11 @@
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 
 from ctranslate2 import Generator
 from huggingface_hub import snapshot_download
 from transformers.models.llama import LlamaTokenizerFast
 
 from server.config import Config
-from server.typedefs import ListOrTuple, Message
+from server.typedefs import Message
 
 
 class QueryLengthError(Exception):
@@ -21,13 +21,16 @@ class ChatModel:
 
     Methods
     -------
-    set_static_prompt(static_user_prompt: str, static_assistant_prompt: str) -> int
+    set_static_prompt(static_user_prompt: str, static_assistant_prompt: str) -> bool
         set the model's static prompt
 
-    query(messages: list[Message]) -> Iterator[str] | None
+    encode_messages(messages: Sequence[Message]) -> list[str]
+        encode text into tokens
+
+    query(messages: Sequence[Message]) -> Iterator[str] | None
         query the model
 
-    generate(tokens: ListOrTuple[str]) -> Iterator[str]
+    generate(tokens: Sequence[str]) -> Iterator[str]
         generate text from a series/single prompt(s)
     """
 
@@ -64,7 +67,7 @@ class ChatModel:
     def __len__(self) -> int:
         return len(self.static_prompt)
 
-    def encode_messages(self, messages: ListOrTuple[Message]) -> list[str]:
+    def encode_messages(self, messages: Sequence[Message]) -> list[str]:
         """
         Summary
         -------
@@ -72,11 +75,13 @@ class ChatModel:
 
         Parameters
         ----------
-        messages (ListOrTuple[Message]) : the messages to encode
+        messages (Sequence[Message])
+            the messages to encode
 
         Returns
         -------
-        tokens (list[str]) : the encoded tokens
+        tokens (list[str])
+            the encoded tokens
         """
         prompt = self.tokeniser.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
         return self.tokeniser(prompt)._encodings[0].tokens  # pyright: ignore [reportOptionalSubscript. reportAssignmentType]  # noqa: SLF001
@@ -89,12 +94,16 @@ class ChatModel:
 
         Parameters
         ----------
-        static_user_prompt (str) : the static user prompt
-        static_assistant_prompt (str) : the static assistant prompt
+        static_user_prompt (str)
+            the static user prompt
+
+        static_assistant_prompt (str)
+            the static assistant prompt
 
         Returns
         -------
-        tokens (int) : the number of tokens in the static prompt
+        success (bool)
+            whether the static prompt was set successfully
         """
         static_prompts: list[Message] = [
             {
@@ -118,7 +127,7 @@ class ChatModel:
 
         return True
 
-    def query(self, messages: ListOrTuple[Message]) -> Iterator[str] | None:
+    def query(self, messages: Sequence[Message]) -> Iterator[str] | None:
         """
         Summary
         -------
@@ -126,11 +135,13 @@ class ChatModel:
 
         Parameters
         ----------
-        messages (ListOrTuple[Message]) : the messages to query the model with
+        messages (Sequence[Message])
+            the messages to query the model with
 
         Returns
         -------
-        answer (Message | None) : the answer to the query
+        answer (Message | None)
+            the answer to the query
         """
         tokens = self.encode_messages(messages)
 
@@ -147,11 +158,13 @@ class ChatModel:
 
         Parameters
         ----------
-        tokens (list[str]) : the tokens to generate text from
+        tokens (list[str])
+            the tokens to generate text from
 
         Yields
         -------
-        answer (str) : the generated answer
+        answer (str)
+            the generated answer
         """
         generator = self.generator.generate_tokens(
             tokens,
@@ -174,7 +187,8 @@ def get_chat_model() -> ChatModel:
 
     Returns
     -------
-    model (ChatModel) : the language model
+    model (ChatModel)
+        the language model
     """
     model_path = snapshot_download('winstxnhdw/Llama-3.2-3B-Instruct-ct2-int8')
     tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True, legacy=False)

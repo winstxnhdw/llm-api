@@ -18,10 +18,13 @@ def exception_handler(_, exception: Exception) -> Response[dict[str, str]]:
 
     Parameters
     ----------
-    request (Request) : the request
-    exception (Exception) : the exception
+    request (Request)
+        the request
+
+    exception (Exception)
+        the exception
     """
-    getLogger('custom.access').error('', exc_info=exception)
+    getLogger('custom.access').error(exception, exc_info=True)
 
     return Response(
         content={'detail': 'Internal Server Error'},

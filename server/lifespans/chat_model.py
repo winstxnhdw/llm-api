@@ -15,7 +15,8 @@ async def chat_model(app: Litestar) -> AsyncIterator[None]:
 
     Parameters
     ----------
-    app (Litestar) : the Litestar application
+    app (Litestar)
+        the Litestar application
     """
     app.state.chat = get_chat_model()
 

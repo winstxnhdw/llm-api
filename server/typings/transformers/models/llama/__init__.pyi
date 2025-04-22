@@ -13,7 +13,7 @@ from transformers.tokenization_utils_base import (
 from transformers.tokenization_utils_fast import PreTrainedTokenizerFast
 from transformers.utils import PaddingStrategy, TensorType
 
-from server.typedefs import ListOrTuple, Message
+from server.typedefs import Message
 
 class LlamaTokenizerFast(PreTrainedTokenizerFast):
     def __call__(
@@ -56,7 +56,7 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     @overload
     def apply_chat_template(
         self,
-        conversation: ListOrTuple[Message],
+        conversation: Sequence[Message],
         tools: list[dict[Any, Any]] | None = None,
         documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,
@@ -75,7 +75,7 @@ class LlamaTokenizerFast(PreTrainedTokenizerFast):
     @overload
     def apply_chat_template(
         self,
-        conversation: ListOrTuple[ListOrTuple[Message]],
+        conversation: Sequence[Sequence[Message]],
         tools: list[dict[Any, Any]] | None = None,
         documents: list[dict[str, str]] | None = None,
         chat_template: str | None = None,

@@ -6,13 +6,14 @@ RUN python -c \
     snapshot_download('winstxnhdw/Llama-3.2-3B-Instruct-ct2-int8');"
 
 
-FROM python:3.12-slim AS python-builder
+FROM python:slim AS python-builder
 
 WORKDIR /home/user
 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 ENV UV_NO_CACHE=1
+ENV PYTHONOPTIMIZE=2
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 COPY pyproject.toml uv.lock ./
@@ -24,7 +25,7 @@ COPY . .
 RUN uv sync --frozen --no-dev --no-editable
 
 
-FROM python:3.12-slim
+FROM python:slim
 
 ENV HOME=/home/user
 ENV PATH=$HOME/.venv/bin:$PATH

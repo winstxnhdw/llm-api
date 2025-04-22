@@ -1,9 +1,7 @@
 # pylint: skip-file
 
 from collections.abc import Callable, Iterable
-from typing import Any, Generic, Literal, overload
-
-from typing_extensions import TypeVar
+from typing import Any, Generic, Literal, TypeVar, overload
 
 type ComputeType = Literal[
     'default',
