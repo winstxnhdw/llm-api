@@ -19,7 +19,12 @@ curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/chat' \
      -H 'Content-Type: application/json' \
      -d \
      '{
-         "instruction": "What is the capital of Japan?"
+         "messages": [
+             {
+                 "role": "user",
+                 "content": "What is the capital of France?"
+             }
+         ]
       }'
 ```
 
