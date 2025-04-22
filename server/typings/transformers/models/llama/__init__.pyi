@@ -11,7 +11,7 @@ from transformers.tokenization_utils_base import (
     TruncationStrategy,
 )
 from transformers.tokenization_utils_fast import PreTrainedTokenizerFast
-from transformers.utils import PaddingStrategy, TensorType
+from transformers.utils.generic import PaddingStrategy, TensorType
 
 from server.typedefs import Message
 
