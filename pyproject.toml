@@ -13,6 +13,7 @@ dependencies = [
     "pydantic-settings>=2.9.1",
     "transformers>=4.51.3",
     "uvloop>=0.21.0",
+    "picologging>=0.9.3; python_version < '3.13'",
 ]
 
 [project.scripts]
