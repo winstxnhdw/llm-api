@@ -10,13 +10,13 @@ dependencies = [
     "litestar>=2.16.0",
     "msgspec>=0.19.0",
     "pydantic-settings>=2.9.1",
-    "transformers>=4.52.1",
+    "transformers>=4.52.2",
     "uvloop>=0.21.0",
     "picologging>=0.9.3; python_version < '3.13'",
 ]
 
 [dependency-groups]
-dev = ["nodejs-wheel-binaries>=22.15.1", "pyright>=1.1.400", "ruff>=0.11.10"]
+dev = ["nodejs-wheel-binaries>=22.15.1", "pyright>=1.1.401", "ruff>=0.11.10"]
 
 [project.scripts]
 llm-api = "server:main"

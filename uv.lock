@@ -291,14 +291,14 @@ requires-dist = [
     { name = "msgspec", specifier = ">=0.19.0" },
     { name = "picologging", marker = "python_full_version < '3.13'", specifier = ">=0.9.3" },
     { name = "pydantic-settings", specifier = ">=2.9.1" },
-    { name = "transformers", specifier = ">=4.52.1" },
+    { name = "transformers", specifier = ">=4.52.2" },
     { name = "uvloop", specifier = ">=0.21.0" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "nodejs-wheel-binaries", specifier = ">=22.15.1" },
-    { name = "pyright", specifier = ">=1.1.400" },
+    { name = "pyright", specifier = ">=1.1.401" },
     { name = "ruff", specifier = ">=0.11.10" },
 ]
 
@@ -561,15 +561,15 @@ wheels = [
 
 [[package]]
 name = "pyright"
-version = "1.1.400"
+version = "1.1.401"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "nodeenv" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6c/cb/c306618a02d0ee8aed5fb8d0fe0ecfed0dbf075f71468f03a30b5f4e1fe0/pyright-1.1.400.tar.gz", hash = "sha256:b8a3ba40481aa47ba08ffb3228e821d22f7d391f83609211335858bf05686bdb", size = 3846546, upload-time = "2025-04-24T12:55:18.907Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/79/9a/7ab2b333b921b2d6bfcffe05a0e0a0bbeff884bd6fb5ed50cd68e2898e53/pyright-1.1.401.tar.gz", hash = "sha256:788a82b6611fa5e34a326a921d86d898768cddf59edde8e93e56087d277cc6f1", size = 3894193, upload-time = "2025-05-21T10:44:52.03Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c8/a5/5d285e4932cf149c90e3c425610c5efaea005475d5f96f1bfdb452956c62/pyright-1.1.400-py3-none-any.whl", hash = "sha256:c80d04f98b5a4358ad3a35e241dbf2a408eee33a40779df365644f8054d2517e", size = 5563460, upload-time = "2025-04-24T12:55:17.002Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/e6/1f908fce68b0401d41580e0f9acc4c3d1b248adcff00dfaad75cd21a1370/pyright-1.1.401-py3-none-any.whl", hash = "sha256:6fde30492ba5b0d7667c16ecaf6c699fab8d7a1263f6a18549e0b00bf7724c06", size = 5629193, upload-time = "2025-05-21T10:44:50.129Z" },
 ]
 
 [[package]]
@@ -767,7 +767,7 @@ wheels = [
 
 [[package]]
 name = "transformers"
-version = "4.52.1"
+version = "4.52.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "filelock" },
@@ -781,9 +781,9 @@ dependencies = [
     { name = "tokenizers" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4a/de/f3f3a0649dc522aeff55a5739e06e132c875c53701307a2ddd7ce7528ec5/transformers-4.52.1.tar.gz", hash = "sha256:c380d583ed9c7ebe3e30ca5e55ec1249db39eb9ee277f8e74dab1abc6a03c938", size = 8944009, upload-time = "2025-05-20T20:49:01.497Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ad/31/779c82f55eee0b66164259a78c5bbf29badacb5f4651b35dfb51c843e6cd/transformers-4.52.2.tar.gz", hash = "sha256:fc86139b95ae273d98dae9dee54693296f2c4f3b1a1325cc3c2d1e65fb503c12", size = 8955077, upload-time = "2025-05-21T13:42:50.085Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b8/1e/2b00e5021c3545d4a0ae32f3d332ae29e62a6259092f1468976e7b9d4adb/transformers-4.52.1-py3-none-any.whl", hash = "sha256:604b2bb357c480dc5883b7944e8562c967f6b06f63dfb6a1c4665d13d067148f", size = 10459023, upload-time = "2025-05-20T20:48:57.796Z" },
+    { url = "https://files.pythonhosted.org/packages/7d/0d/f6b21bcb1d1c16c477983cbedcc34dda5727ec14a02dc1b84930f1ecd97d/transformers-4.52.2-py3-none-any.whl", hash = "sha256:d419a87a185097fc162a61f01287b54d5445a9940345ecc5fd06fb74565bd234", size = 10460206, upload-time = "2025-05-21T13:42:46.463Z" },
 ]
 
 [[package]]
