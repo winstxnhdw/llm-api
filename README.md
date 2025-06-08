@@ -46,5 +46,5 @@ You can access the Swagger UI at [localhost:7860/schema/swagger](http://localhos
 
 ```bash
 docker build -f Dockerfile.build -t llm-api .
-docker run --rm -e APP_PORT=7860 -p 7860:7860 llm-api
+docker run --rm -e SERVER_PORT=7860 -p 7860:7860 llm-api
 ```

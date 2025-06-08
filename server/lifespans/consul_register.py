@@ -19,7 +19,7 @@ async def consul_register(_) -> AsyncIterator[None]:
     app (Litestar)
         the application instance
     """
-    consul = Consul(port=443, scheme='https', verify=True)
+    consul = Consul(scheme='https', verify=True)
     consul.http.session.headers.update({'Authorization': Config.consul_auth_token})  # pyright: ignore [reportAttributeAccessIssue]
     consul_service_check = {
         'http': f'https://{Config.consul_service_address}{Config.server_root_path}{health.paths.pop()}',
