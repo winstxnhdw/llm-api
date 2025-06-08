@@ -8,7 +8,7 @@ on:
       - Dockerfile.build
       - pyproject.toml
       - uv.lock
-      - server/
+      - '**.py'
 
 jobs:
   test:
