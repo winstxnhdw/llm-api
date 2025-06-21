@@ -1,5 +1,3 @@
-from logging import getLogger
-
 from litestar import Litestar, Response, Router
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.spec import Server
@@ -9,6 +7,7 @@ from litestar.status_codes import HTTP_500_INTERNAL_SERVER_ERROR
 from server.api import health, v1
 from server.config import Config
 from server.lifespans import chat_model, consul_register
+from server.logger import AppLogger
 
 
 def exception_handler(_, exception: Exception) -> Response[dict[str, str]]:
@@ -25,10 +24,11 @@ def exception_handler(_, exception: Exception) -> Response[dict[str, str]]:
     exception (Exception)
         the exception
     """
-    getLogger('custom.access').error(exception, exc_info=True)
+    error_message = 'Internal Server Error'
+    AppLogger.error(error_message, exc_info=exception)
 
     return Response(
-        content={'detail': 'Internal Server Error'},
+        content={'detail': error_message},
         status_code=HTTP_500_INTERNAL_SERVER_ERROR,
     )
 
