@@ -1,10 +1,14 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from consul import Consul
+from aiohttp import ClientSession
 
 from server.api import health
 from server.config import Config
+
+
+class ConsulServiceRegistrationError(Exception):
+    pass
 
 
 @asynccontextmanager
@@ -19,23 +23,37 @@ async def consul_register(_) -> AsyncIterator[None]:
     app (Litestar)
         the application instance
     """
-    consul = Consul(scheme='https', verify=True)
-    consul.http.session.headers.update({'Authorization': Config.consul_auth_token})  # pyright: ignore [reportAttributeAccessIssue]
-    consul_service_check = {
-        'http': f'https://{Config.consul_service_address}{Config.server_root_path}{health.paths.pop()}',
-        'interval': '10s',
-        'timeout': '5s',
+
+    consul_service_address = f'https://{Config.consul_service_address}/v1/agent/service'
+    service_name = Config.app_name
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': Config.consul_auth_token,
     }
 
-    consul.agent.service.register(
-        name=Config.app_name,
-        address=Config.consul_service_address,
-        port=443,
-        check=consul_service_check,
-    )
+    health_check = {
+        'HTTP': f'https://{Config.consul_service_address}{Config.server_root_path}{health.paths.pop()}',
+        'Interval': '10s',
+        'Timeout': '5s',
+    }
 
-    try:
-        yield
+    payload = {
+        'Name': service_name,
+        'Address': Config.consul_service_address,
+        'Port': 443,
+        'Check': health_check,
+        'ReplaceExistingChecks': True,
+    }
 
-    finally:
-        consul.agent.service.deregister(Config.app_name)
+    async with ClientSession(headers=headers) as session:
+        async with session.put(f'{consul_service_address}/register', json=payload) as response:
+            if not response.ok:
+                raise ConsulServiceRegistrationError
+
+        try:
+            yield
+
+        finally:
+            async with session.put(f'{consul_service_address}/deregister/{service_name}'):
+                pass
