@@ -17,7 +17,6 @@ type ComputeType = Literal[
 
 type Devices = Literal['cpu', 'cuda', 'auto']
 LogProbability = TypeVar('LogProbability', default=None, bound=float | None)
-Scores = TypeVar('Scores', bound=list[float])
 
 class GenerationStepResult(Generic[LogProbability]):
     batch_id: int
@@ -28,14 +27,14 @@ class GenerationStepResult(Generic[LogProbability]):
     token: str
     token_id: int
 
-class GenerationResult(Generic[Scores]):
-    scores: Scores
+class GenerationResult[T: list[float]]:
+    scores: T
     sequences: list[list[str]]
     sequences_ids: list[list[int]]
 
-class AsyncGenerationResult(Generic[Scores]):
+class AsyncGenerationResult[T: list[float]]:
     def done(self) -> bool: ...
-    def result(self) -> GenerationResult[Scores]: ...
+    def result(self) -> T: ...
 
 class Generator:
     device: Devices
