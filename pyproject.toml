@@ -9,7 +9,7 @@ dependencies = [
     "jinja2>=3.1.6",
     "litestar>=2.16.0",
     "msgspec>=0.19.0",
-    "pydantic-settings>=2.9.1",
+    "pydantic-settings>=2.10.0",
     "transformers>=4.52.4",
     "uvloop>=0.21.0",
     "picologging>=0.9.3; python_version < '3.13'",
@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [dependency-groups]
-dev = ["nodejs-wheel-binaries>=22.16.0", "pyright>=1.1.402", "ruff>=0.11.13"]
+dev = ["nodejs-wheel-binaries>=22.16.0", "pyright>=1.1.402", "ruff>=0.12.0"]
 
 [project.scripts]
 llm-api = "server:main"
