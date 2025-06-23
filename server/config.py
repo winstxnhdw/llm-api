@@ -65,4 +65,5 @@ class Config(BaseSettings):
     use_cuda: bool = False
 
     consul_auth_token: str
+    consul_http_addr: str
     consul_service_address: str = 'winstxnhdw-llm-api.hf.space'

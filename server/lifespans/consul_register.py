@@ -20,9 +20,7 @@ async def consul_register(_) -> AsyncIterator[None]:
         the application instance
     """
 
-    consul_service_address = f'https://{Config.consul_service_address}/v1/agent/service'
-    service_name = Config.app_name
-
+    consul_server = f'https://{Config.consul_http_addr}/v1/agent/service'
     headers = {
         'Content-Type': 'application/json',
         'Authorization': Config.consul_auth_token,
@@ -35,20 +33,25 @@ async def consul_register(_) -> AsyncIterator[None]:
     }
 
     payload = {
-        'Name': service_name,
+        'Name': Config.app_name,
+        'Tags': ['prometheus'],
         'Address': Config.consul_service_address,
         'Port': 443,
         'Check': health_check,
         'ReplaceExistingChecks': True,
+        'Meta': {
+            'metrics_port': '443',
+            'metrics_path': '/metrics',
+        },
     }
 
     async with ClientSession(headers=headers) as session:
-        async with session.put(f'{consul_service_address}/register', json=payload) as response:
+        async with session.put(f'{consul_server}/register', json=payload) as response:
             response.raise_for_status()
 
         try:
             yield
 
         finally:
-            async with session.put(f'{consul_service_address}/deregister/{service_name}'):
+            async with session.put(f'{consul_server}/deregister/{Config.app_name}'):
                 pass
