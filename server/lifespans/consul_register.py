@@ -38,7 +38,6 @@ async def consul_register(_) -> AsyncIterator[None]:
         'Address': Config.consul_service_address,
         'Port': 443,
         'Check': health_check,
-        'ReplaceExistingChecks': True,
         'Meta': {
             'metrics_port': '443',
             'metrics_path': '/metrics',
@@ -46,7 +45,11 @@ async def consul_register(_) -> AsyncIterator[None]:
     }
 
     async with ClientSession(headers=headers) as session:
-        async with session.put(f'{consul_server}/register', json=payload, headers=headers) as response:
+        async with session.put(
+            f'{consul_server}/register',
+            json=payload,
+            params='replace-existing-checks',
+        ) as response:
             response.raise_for_status()
 
         try:
