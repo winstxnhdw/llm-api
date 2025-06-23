@@ -46,7 +46,7 @@ async def consul_register(_) -> AsyncIterator[None]:
     }
 
     async with ClientSession(headers=headers) as session:
-        async with session.put(f'{consul_server}/register', json=payload) as response:
+        async with session.put(f'{consul_server}/register', json=payload, headers=headers) as response:
             response.raise_for_status()
 
         try:
