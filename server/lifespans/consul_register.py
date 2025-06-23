@@ -7,10 +7,6 @@ from server.api import health
 from server.config import Config
 
 
-class ConsulServiceRegistrationError(Exception):
-    pass
-
-
 @asynccontextmanager
 async def consul_register(_) -> AsyncIterator[None]:
     """
@@ -48,8 +44,7 @@ async def consul_register(_) -> AsyncIterator[None]:
 
     async with ClientSession(headers=headers) as session:
         async with session.put(f'{consul_service_address}/register', json=payload) as response:
-            if not response.ok:
-                raise ConsulServiceRegistrationError
+            response.raise_for_status()
 
         try:
             yield
