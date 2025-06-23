@@ -21,11 +21,6 @@ async def consul_register(_) -> AsyncIterator[None]:
     """
 
     consul_server = f'https://{Config.consul_http_addr}/v1/agent/service'
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': Config.consul_auth_token,
-    }
-
     health_check = {
         'HTTP': f'https://{Config.consul_service_address}{Config.server_root_path}{health.paths.pop()}',
         'Interval': '10s',
@@ -44,11 +39,11 @@ async def consul_register(_) -> AsyncIterator[None]:
         },
     }
 
-    async with ClientSession(headers=headers) as session:
+    async with ClientSession(headers={'Authorization': f'Bearer {Config.consul_auth_token}'}) as session:
         async with session.put(
             f'{consul_server}/register',
             json=payload,
-            params='replace-existing-checks',
+            params={'replace-existing-checks': 'true'},
         ) as response:
             response.raise_for_status()
 
