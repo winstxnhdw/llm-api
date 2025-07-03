@@ -31,7 +31,8 @@ async def consul_register(_) -> AsyncIterator[None]:
 
     ascii_letters_with_digits = f'{ascii_letters}{digits}'
     payload = {
-        'Name': f'{Config.app_name}-{"".join(choice(ascii_letters_with_digits) for _ in range(6))}',  # noqa: S311
+        'Name': Config.app_name,
+        'ID': f'{Config.app_name}-{"".join(choice(ascii_letters_with_digits) for _ in range(4))}',  # noqa: S311
         'Tags': ['prometheus'],
         'Address': Config.consul_service_address,
         'Port': 443,
@@ -54,5 +55,5 @@ async def consul_register(_) -> AsyncIterator[None]:
             yield
 
         finally:
-            async with session.put(f'{consul_server}/deregister/{payload["Name"]}'):
+            async with session.put(f'{consul_server}/deregister/{payload["ID"]}'):
                 pass
