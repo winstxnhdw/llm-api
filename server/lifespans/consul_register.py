@@ -1,5 +1,7 @@
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from random import choice
+from string import ascii_letters, digits
 
 from aiohttp import ClientSession
 
@@ -27,8 +29,9 @@ async def consul_register(_) -> AsyncIterator[None]:
         'Timeout': '5s',
     }
 
+    ascii_letters_with_digits = f'{ascii_letters}{digits}'
     payload = {
-        'Name': Config.app_name,
+        'Name': f'{Config.app_name}-{"".join(choice(ascii_letters_with_digits) for _ in range(6))}',  # noqa: S311
         'Tags': ['prometheus'],
         'Address': Config.consul_service_address,
         'Port': 443,
@@ -51,5 +54,5 @@ async def consul_register(_) -> AsyncIterator[None]:
             yield
 
         finally:
-            async with session.put(f'{consul_server}/deregister/{Config.app_name}'):
+            async with session.put(f'{consul_server}/deregister/{payload["Name"]}'):
                 pass
