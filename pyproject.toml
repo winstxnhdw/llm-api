@@ -14,7 +14,7 @@ dependencies = [
     "uvloop>=0.21.0",
     "picologging>=0.9.3; python_version < '3.13'",
     "prometheus-client>=0.22.1",
-    "aiohttp>=3.12.13",
+    "aiohttp>=3.12.14",
 ]
 
 [dependency-groups]
