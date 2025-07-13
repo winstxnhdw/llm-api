@@ -2,6 +2,7 @@ from functools import partial
 from logging import Logger, getLogger
 
 from litestar import Litestar, Response, Router
+from litestar.datastructures import State
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.spec import Server
 from litestar.plugins.prometheus import PrometheusConfig, PrometheusController
@@ -44,15 +45,18 @@ def app() -> Litestar:
     -------
     the Litestar application
     """
+    config = Config()
+    app_name = config.app_name
+
     openapi_config = OpenAPIConfig(
-        title='llm-api',
+        title=app_name,
         version='1.0.0',
         description='A performant CPU-based API for LLMs using CTranslate2, hosted on Hugging Face Spaces.',
         use_handler_docstrings=True,
-        servers=[Server(url=Config.server_root_path)],
+        servers=[Server(url=config.server_root_path)],
     )
 
-    logger = getLogger('custom.access')
+    logger = getLogger(app_name)
     v1_router = Router('/v1', tags=['v1'], route_handlers=[v1.ChatController])
 
     return Litestar(
@@ -60,5 +64,6 @@ def app() -> Litestar:
         exception_handlers={HTTP_500_INTERNAL_SERVER_ERROR: partial(exception_handler, logger)},
         route_handlers=[PrometheusController, v1_router, health],
         lifespan=[chat_model, consul_register],
-        middleware=[PrometheusConfig(app_name=Config.app_name).middleware],
+        middleware=[PrometheusConfig(app_name).middleware],
+        state=State({'config': config}),
     )

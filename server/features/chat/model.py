@@ -4,7 +4,6 @@ from ctranslate2 import Generator
 from huggingface_hub import snapshot_download
 from transformers.models.llama import LlamaTokenizerFast
 
-from server.config import Config
 from server.typedefs import Message
 
 
@@ -179,7 +178,7 @@ class ChatModel:
         )
 
 
-def get_chat_model() -> ChatModel:
+def get_chat_model(chat_model_threads: int, *, use_cuda: bool) -> ChatModel:
     """
     Summary
     -------
@@ -194,9 +193,9 @@ def get_chat_model() -> ChatModel:
     tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True, legacy=False)
     generator = Generator(
         model_path,
-        'cuda' if Config.use_cuda else 'cpu',
+        'cuda' if use_cuda else 'cpu',
         compute_type='auto',
-        inter_threads=Config.chat_model_threads,
+        inter_threads=chat_model_threads,
         max_queued_batches=-1,
     )
 

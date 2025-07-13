@@ -1,28 +1,6 @@
-from collections.abc import Callable
-
 from pydantic_settings import BaseSettings
 
 
-def singleton[T](callable_object: Callable[[], T]) -> T:
-    """
-    Summary
-    -------
-    a decorator to transform a callable/class to a singleton
-
-    Parameters
-    ----------
-    callable_object (Callable[[], T])
-        the callable to transform
-
-    Returns
-    -------
-    instance (T)
-        the singleton
-    """
-    return callable_object()
-
-
-@singleton
 class Config(BaseSettings):
     """
     Summary
@@ -64,6 +42,6 @@ class Config(BaseSettings):
     chat_model_threads: int = 1
     use_cuda: bool = False
 
-    consul_auth_token: str
-    consul_http_addr: str
+    consul_http_addr: str | None = None
+    consul_auth_token: str | None = None
     consul_service_address: str = 'winstxnhdw-llm-api.hf.space'

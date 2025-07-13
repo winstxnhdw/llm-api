@@ -6,11 +6,13 @@ from string import ascii_letters, digits
 from aiohttp import ClientSession
 
 from server.api import health
-from server.config import Config
+from server.lifespans.inject_state import inject_state
+from server.typedefs import AppState
 
 
+@inject_state
 @asynccontextmanager
-async def consul_register(_) -> AsyncIterator[None]:
+async def consul_register(_, state: AppState) -> AsyncIterator[None]:
     """
     Summary
     -------
@@ -20,21 +22,25 @@ async def consul_register(_) -> AsyncIterator[None]:
     ----------
     app (Litestar)
         the application instance
-    """
 
-    consul_server = f'https://{Config.consul_http_addr}/v1/agent/service'
+    state (AppState)
+        the application state
+    """
+    config = state.config
+
+    consul_server = f'https://{config.consul_http_addr}/v1/agent/service'
     health_check = {
-        'HTTP': f'https://{Config.consul_service_address}{Config.server_root_path}{health.paths.pop()}',
+        'HTTP': f'https://{config.consul_service_address}{config.server_root_path}{health.paths.pop()}',
         'Interval': '10s',
         'Timeout': '5s',
     }
 
     ascii_letters_with_digits = f'{ascii_letters}{digits}'
     payload = {
-        'Name': Config.app_name,
-        'ID': f'{Config.app_name}-{"".join(choice(ascii_letters_with_digits) for _ in range(4))}',  # noqa: S311
+        'Name': config.app_name,
+        'ID': f'{config.app_name}-{"".join(choice(ascii_letters_with_digits) for _ in range(4))}',  # noqa: S311
         'Tags': ['prometheus'],
-        'Address': Config.consul_service_address,
+        'Address': config.consul_service_address,
         'Port': 443,
         'Check': health_check,
         'Meta': {
@@ -43,7 +49,7 @@ async def consul_register(_) -> AsyncIterator[None]:
         },
     }
 
-    async with ClientSession(headers={'Authorization': f'Bearer {Config.consul_auth_token}'}) as session:
+    async with ClientSession(headers={'Authorization': f'Bearer {config.consul_auth_token}'}) as session:
         async with session.put(
             f'{consul_server}/register',
             json=payload,
