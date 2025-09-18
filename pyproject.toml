@@ -13,12 +13,12 @@ dependencies = [
     "transformers>=4.56.1",
     "uvloop>=0.21.0",
     "picologging>=0.9.3; python_version < '3.13'",
-    "prometheus-client>=0.22.1",
+    "prometheus-client>=0.23.1",
     "aiohttp>=3.12.15",
 ]
 
 [dependency-groups]
-dev = ["nodejs-wheel-binaries>=22.19.0", "pyright>=1.1.405", "ruff>=0.13.0"]
+dev = ["nodejs-wheel-binaries>=22.19.0", "pyright>=1.1.405", "ruff>=0.13.1"]
 
 [project.scripts]
 llm-api = "server:main"
