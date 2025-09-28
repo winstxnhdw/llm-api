@@ -2,7 +2,7 @@
 name = "llm-api"
 version = "0.1.0"
 description = "A fast CPU-based API for LLMs"
-requires-python = "~=3.13"
+requires-python = ">=3.13.7, <3.14"
 dependencies = [
     "ctranslate2>=4.6.0",
     "granian>=2.5.4",

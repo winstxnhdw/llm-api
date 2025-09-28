@@ -3,7 +3,7 @@ FROM python:slim AS model-builder
 RUN pip install huggingface_hub
 RUN python -c \
     "from huggingface_hub import snapshot_download; \
-    snapshot_download('winstxnhdw/Llama-3.2-3B-Instruct-ct2-int8');"
+    snapshot_download('winstxnhdw/Qwen2.5-3B-Instruct-ct2-int8');"
 
 
 FROM python:slim AS python-builder
