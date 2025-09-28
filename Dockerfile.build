@@ -1,11 +1,3 @@
-FROM python:slim AS model-builder
-
-RUN pip install huggingface_hub
-RUN python -c \
-    "from huggingface_hub import snapshot_download; \
-    snapshot_download('winstxnhdw/Qwen2.5-3B-Instruct-ct2-int8');"
-
-
 FROM python:slim AS python-builder
 
 WORKDIR /home/user
@@ -33,7 +25,6 @@ ENV HOME=/home/user
 ENV PATH=$HOME/.venv/bin:$PATH
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV HF_HUB_OFFLINE=1
 ENV TRANSFORMERS_NO_ADVISORY_WARNINGS=1
 
 RUN useradd -m -u 1000 user
@@ -42,7 +33,6 @@ USER user
 
 WORKDIR $HOME
 
-COPY --chown=user --from=model-builder  /root/.cache/huggingface $HOME/.cache/huggingface
 COPY --chown=user --from=python-builder $HOME/.venv .venv
 
 CMD ["llm-api"]

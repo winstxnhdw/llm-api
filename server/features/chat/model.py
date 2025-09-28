@@ -2,7 +2,7 @@ from collections.abc import Iterator, Sequence
 
 from ctranslate2 import Generator
 from huggingface_hub import snapshot_download
-from transformers.models.llama import LlamaTokenizerFast
+from transformers.models.qwen2 import Qwen2TokenizerFast
 
 from server.typedefs import Message
 
@@ -46,7 +46,7 @@ class ChatModel:
     def __init__(
         self,
         generator: Generator,
-        tokeniser: LlamaTokenizerFast,
+        tokeniser: Qwen2TokenizerFast,
         min_query_length: int,
         max_context_length: int,
         max_generation_length: int,
@@ -82,7 +82,7 @@ class ChatModel:
         tokens (list[str])
             the encoded tokens
         """
-        prompt = self.tokeniser.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
+        prompt = self.tokeniser.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)  # pyright: ignore [reportArgumentType]
         return self.tokeniser(prompt)._encodings[0].tokens  # pyright: ignore [reportOptionalSubscript. reportAssignmentType]  # noqa: SLF001
 
     def set_static_prompt(self, static_user_prompt: str, static_assistant_prompt: str) -> bool:
@@ -189,8 +189,8 @@ def get_chat_model(chat_model_threads: int, *, use_cuda: bool) -> ChatModel:
     model (ChatModel)
         the language model
     """
-    model_path = snapshot_download('winstxnhdw/Qwen2.5-3B-Instruct-ct2-int8')
-    tokeniser = LlamaTokenizerFast.from_pretrained(model_path, local_files_only=True, legacy=False)
+    model_path = snapshot_download('winstxnhdw/Qwen2.5-7B-Instruct-ct2-int8')
+    tokeniser = Qwen2TokenizerFast.from_pretrained(model_path, legacy=False)
     generator = Generator(
         model_path,
         'cuda' if use_cuda else 'cpu',
