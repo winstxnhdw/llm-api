@@ -203,4 +203,10 @@ def get_chat_model(chat_model_threads: int, *, use_cuda: bool) -> ChatModel:
     max_context_length = 131072
     max_generation_length = 1024
 
-    return ChatModel(generator, tokeniser, min_query_length, max_context_length, max_generation_length)
+    return ChatModel(
+        generator,
+        tokeniser,  # pyright: ignore [reportUnknownArgumentType]
+        min_query_length,
+        max_context_length,
+        max_generation_length,
+    )
