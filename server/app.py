@@ -30,11 +30,10 @@ def exception_handler(logger: Logger, _, exception: Exception) -> Response[dict[
     exception (Exception)
         the exception
     """
-    error_message = 'Internal Server Error'
-    logger.error(error_message, exc_info=exception)
+    logger.error(exception, exc_info=exception)
 
     return Response(
-        content={'detail': error_message},
+        content={'detail': 'Internal Server Error'},
         status_code=HTTP_500_INTERNAL_SERVER_ERROR,
     )
 

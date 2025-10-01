@@ -31,7 +31,10 @@ line-length = 120
 
 [tool.ruff.lint]
 select = ["ALL"]
-ignore = ["D", "Q", "TC", "ANN001", "PLC0414", "INP001", "S104", "PYI001", "COM812"]
+ignore = ["D", "Q", "TC", "PLC0414", "INP001", "S104", "PYI001", "COM812"]
+
+[tool.ruff.lint.flake8-annotations]
+suppress-dummy-args = true
 
 [tool.ruff.format]
 quote-style = "single"
