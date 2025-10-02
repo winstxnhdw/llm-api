@@ -14,7 +14,7 @@ A fast CPU-based API for Qwen 2.5, hosted on Hugging Face Spaces. To achieve fas
 Simply cURL the endpoint like in the following.
 
 ```bash
-curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/chat' \
+curl -N 'https://winstxnhdw-llm-api.hf.space/api/v1/chat/stream' \
      -H 'Content-Type: application/json' \
      -d \
      '{
@@ -45,5 +45,12 @@ You can access the Swagger UI at [localhost:7860/schema/swagger](http://localhos
 
 ```bash
 docker build -f Dockerfile.build -t llm-api .
-docker run --rm -e SERVER_PORT=7860 -p 7860:7860 llm-api
+docker run --rm --init -e SERVER_PORT=7860 -p 7860:7860 llm-api
+```
+
+You can enable CUDA support by building the image with the following `--build-arg` flag.
+
+```bash
+docker build -f Dockerfile.build -t llm-api --build-arg USE_CUDA=1 .
+docker run --rm --init --gpus all -e SERVER_PORT=7860 -p 7860:7860 llm-api
 ```
