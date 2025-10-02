@@ -13,7 +13,6 @@ tests/
 **/*.pyc
 **/Dockerfile*
 **/Makefile
-**/stub.py
 
 **/tmp/
 **/tests/

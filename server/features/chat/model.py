@@ -150,9 +150,7 @@ class ChatModel(ChatAgentProtocol):
         answer (Message | None)
             the answer to the query
         """
-        tokens = self.encode_messages(messages)
-
-        if len(tokens) > self.max_query_length:
+        if len(tokens := self.encode_messages(messages)) > self.max_query_length:
             return None
 
         return self.generate(tokens, cancel_event)

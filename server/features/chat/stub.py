@@ -1,7 +1,7 @@
 from collections.abc import Iterator, Sequence
 from typing import Self
 
-from server.features.chat import ChatAgentProtocol
+from server.features.chat.protocol import ChatAgentProtocol
 from server.typedefs import Event, Message
 
 
