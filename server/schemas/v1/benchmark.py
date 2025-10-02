@@ -1,7 +1,7 @@
 from msgspec import Struct
 
 
-class Benchmark(Struct, kw_only=True):
+class Benchmark(Struct, kw_only=True, gc=False):
     """
     Summary
     -------

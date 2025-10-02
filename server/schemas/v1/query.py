@@ -20,5 +20,5 @@ class Query(Struct, kw_only=True, gc=False):
 
     messages: Annotated[
         Sequence[Message],
-        Meta(examples=[[{'role': 'user', 'content': 'What is the definition of ADHD?'}]]),
+        Meta(examples=[[{"role": "user", "content": "What is the definition of ADHD?"}]]),
     ]

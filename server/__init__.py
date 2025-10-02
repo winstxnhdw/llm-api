@@ -14,8 +14,8 @@ def main() -> None:
     config = Config()
 
     granian = Server(
-        f'{app.__module__}:{app.__name__}',
-        address='0.0.0.0',
+        f"{app.__module__}:{app.__name__}",
+        address="0.0.0.0",
         port=config.server_port,
         interface=Interfaces.ASGI,
         workers=config.worker_count,
@@ -29,5 +29,5 @@ def main() -> None:
     granian.serve()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

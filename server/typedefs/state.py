@@ -1,7 +1,7 @@
 from litestar.datastructures import State
 
 from server.config import Config
-from server.features.chat.model import ChatModel
+from server.features.chat import ChatAgentProtocol
 
 
 class AppState(State):
@@ -15,9 +15,9 @@ class AppState(State):
     config (Config)
         the application configuration
 
-    chat (ChatModel)
+    chat (ChatAgentProtocol)
         the LLM chat model
     """
 
     config: Config
-    chat: ChatModel
+    chat: ChatAgentProtocol

@@ -3,7 +3,7 @@ from typing import Annotated
 from msgspec import Meta, Struct
 
 
-class Answer(Struct, kw_only=True):
+class Answer(Struct, kw_only=True, gc=False):
     """
     Summary
     -------
@@ -17,9 +17,5 @@ class Answer(Struct, kw_only=True):
 
     answer: Annotated[
         str,
-        Meta(
-            examples=[
-                "ADHD is a neurodevelopmental disorder that affects the brain's ability to focus.",
-            ],
-        ),
+        Meta(examples=["ADHD is a neurodevelopmental disorder that affects the brain's ability to focus."]),
     ]

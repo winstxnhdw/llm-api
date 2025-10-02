@@ -1,18 +1,21 @@
 from collections.abc import Iterator, Sequence
+from typing import Self
 
 from ctranslate2 import Generator
-from huggingface_hub import snapshot_download
 from transformers.models.qwen2 import Qwen2TokenizerFast
 
-from server.typedefs import Message
+from server.features.chat.protocol import ChatAgentProtocol
+from server.features.chat.stub import ChatModelStub
+from server.typedefs import Event, Message
+from server.utils import huggingface_download
 
 
 class QueryLengthError(Exception):
     def __init__(self) -> None:
-        super().__init__('The minimum query length cannot be greater than the maximum query length!')
+        super().__init__("The minimum query length cannot be greater than the maximum query length!")
 
 
-class ChatModel:
+class ChatModel(ChatAgentProtocol):
     """
     Summary
     -------
@@ -26,7 +29,7 @@ class ChatModel:
     encode_messages(messages: Sequence[Message]) -> list[str]
         encode text into tokens
 
-    query(messages: Sequence[Message]) -> Iterator[str] | None
+    query(messages: Sequence[Message], cancel_event: Event) -> Iterator[str] | None
         query the model
 
     generate(tokens: Sequence[str]) -> Iterator[str]
@@ -34,13 +37,13 @@ class ChatModel:
     """
 
     __slots__ = (
-        'generator',
-        'max_context_length',
-        'max_generation_length',
-        'max_query_length',
-        'min_query_length',
-        'static_prompt',
-        'tokeniser',
+        "generator",
+        "max_context_length",
+        "max_generation_length",
+        "max_query_length",
+        "min_query_length",
+        "static_prompt",
+        "tokeniser",
     )
 
     def __init__(
@@ -63,8 +66,13 @@ class ChatModel:
         self.max_generation_length = max_generation_length
         self.static_prompt = []
 
-    def __len__(self) -> int:
-        return len(self.static_prompt)
+    def __enter__(self) -> Self:
+        return self
+
+    def __exit__(self, *_) -> None:
+        del self.generator
+        del self.tokeniser
+        del self.static_prompt
 
     def encode_messages(self, messages: Sequence[Message]) -> list[str]:
         """
@@ -106,12 +114,12 @@ class ChatModel:
         """
         static_prompts: list[Message] = [
             {
-                'role': 'user',
-                'content': static_user_prompt,
+                "role": "user",
+                "content": static_user_prompt,
             },
             {
-                'role': 'assistant',
-                'content': static_assistant_prompt,
+                "role": "assistant",
+                "content": static_assistant_prompt,
             },
         ]
 
@@ -126,7 +134,7 @@ class ChatModel:
 
         return True
 
-    def query(self, messages: Sequence[Message]) -> Iterator[str] | None:
+    def query(self, messages: Sequence[Message], cancel_event: Event) -> Iterator[str] | None:
         """
         Summary
         -------
@@ -147,9 +155,9 @@ class ChatModel:
         if len(tokens) > self.max_query_length:
             return None
 
-        return self.generate(tokens)
+        return self.generate(tokens, cancel_event)
 
-    def generate(self, tokens: list[str]) -> Iterator[str]:
+    def generate(self, tokens: list[str], cancel_event: Event) -> Iterator[str]:
         """
         Summary
         -------
@@ -171,30 +179,49 @@ class ChatModel:
             static_prompt=self.static_prompt,
         )
 
-        return (
-            self.tokeniser.backend_tokenizer.decoder.decode([result.token])
-            for result in generator
-            if not result.is_last
-        )
+        for result in generator:
+            if cancel_event.is_set():
+                break
+
+            if result.is_last:
+                break
+
+            yield self.tokeniser.backend_tokenizer.decoder.decode((result.token,))
+
+        generator.close()
 
 
-def get_chat_model(chat_model_threads: int, *, use_cuda: bool) -> ChatModel:
+def get_chat_model(chat_model_threads: int, *, use_cuda: bool, stub: bool) -> ChatAgentProtocol:
     """
     Summary
     -------
     download and load the language model
+
+    Parameters
+    ----------
+    chat_model_threads (int)
+        the number of parallel inference threads to use for the chat model
+
+    use_cuda (bool)
+        whether to use CUDA for inference
+
+    stub (bool)
+        whether to return a stub object
 
     Returns
     -------
     model (ChatModel)
         the language model
     """
-    model_path = snapshot_download('winstxnhdw/Qwen2.5-7B-Instruct-ct2-int8')
+    if stub:
+        return ChatModelStub()
+
+    model_path = huggingface_download("winstxnhdw/Qwen2.5-7B-Instruct-ct2-int8")
     tokeniser = Qwen2TokenizerFast.from_pretrained(model_path, legacy=False)
     generator = Generator(
         model_path,
-        'cuda' if use_cuda else 'cpu',
-        compute_type='auto',
+        "cuda" if use_cuda else "cpu",
+        compute_type="auto",
         inter_threads=chat_model_threads,
         max_queued_batches=-1,
     )

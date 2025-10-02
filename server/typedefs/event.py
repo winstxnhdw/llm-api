@@ -1,0 +1,6 @@
+from typing import Protocol
+
+
+class Event(Protocol):
+    def is_set(self) -> bool: ...
+    def set(self) -> None: ...
