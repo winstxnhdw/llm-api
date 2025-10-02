@@ -1,5 +1,6 @@
 *.pyc
+*.egg-info
 .env
 cache/
 .vscode/
-*.egg-info
+.tmp/
