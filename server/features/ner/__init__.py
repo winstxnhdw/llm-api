@@ -1,0 +1,3 @@
+from server.features.ner.model import get_named_entity_recognition_model as get_named_entity_recognition_model
+from server.features.ner.protocol import Entity as Entity
+from server.features.ner.protocol import NamedEntityRecognitionProtocol as NamedEntityRecognitionProtocol

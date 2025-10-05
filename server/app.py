@@ -15,6 +15,7 @@ from litestar.status_codes import HTTP_500_INTERNAL_SERVER_ERROR
 from server.api import health, v1
 from server.config import Config
 from server.lifespans import load_chat_model
+from server.lifespans.ner_model import load_ner_model
 from server.plugins import ConsulPlugin
 from server.telemetry import get_log_handler, get_meter_provider, get_tracer_provider
 
@@ -65,7 +66,12 @@ def app() -> Litestar:
         servers=[Server(url=config.server_root_path)],
     )
 
-    v1_router = Router("/v1", tags=["v1"], route_handlers=[v1.ChatController])
+    v1_router = Router("/v1", tags=["v1"], route_handlers=[v1.ChatController, v1.NamedEntityRecognitionController])
+
+    lifespans = [
+        load_chat_model(config.chat_model_threads, use_cuda=config.use_cuda, stub=config.stub),
+        load_ner_model(),
+    ]
 
     if config.otel_exporter_otlp_endpoint:
         handler = get_log_handler(otlp_service_name=app_name, otlp_service_instance_id=app_id)
@@ -95,7 +101,7 @@ def app() -> Litestar:
         exception_handlers={HTTP_500_INTERNAL_SERVER_ERROR: partial(exception_handler, logger)},
         route_handlers=[PrometheusController, v1_router, health],
         plugins=plugins,
-        lifespan=[load_chat_model(config.chat_model_threads, use_cuda=config.use_cuda, stub=config.stub)],
+        lifespan=lifespans,
         middleware=[PrometheusConfig(app_name).middleware],
         state=State({"config": config}),
     )

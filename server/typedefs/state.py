@@ -1,7 +1,12 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
 from litestar.datastructures import State
 
-from server.config import Config
-from server.features.chat import ChatAgentProtocol
+if TYPE_CHECKING:
+    from server.features.chat import ChatAgentProtocol
+    from server.features.ner import NamedEntityRecognitionProtocol
 
 
 class AppState(State):
@@ -12,12 +17,12 @@ class AppState(State):
 
     Attributes
     ----------
-    config (Config)
-        the application configuration
-
     chat (ChatAgentProtocol)
         the LLM chat model
+
+    ner (NamedEntityRecognitionProtocol)
+        the named entity recognition model
     """
 
-    config: Config
     chat: ChatAgentProtocol
+    ner: NamedEntityRecognitionProtocol

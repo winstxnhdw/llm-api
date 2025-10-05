@@ -35,7 +35,6 @@ async def chat_model_lifespan(
     with get_chat_model(chat_model_threads, use_cuda=use_cuda, stub=stub) as chat_model:
         app.state.chat = chat_model
         yield
-        del app.state.chat
 
 
 def load_chat_model(

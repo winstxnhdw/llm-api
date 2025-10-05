@@ -1,6 +1,9 @@
-from collections.abc import AsyncGenerator, Callable, Iterable
+from collections.abc import AsyncGenerator, Callable, Iterable, Mapping
 from collections.abc import Generator as PythonGenerator
-from typing import Any, Literal, overload
+from typing import Any, BinaryIO, Literal, Self, overload
+
+from numpy.typing import NDArray
+from torch import Tensor
 
 type Devices = Literal["cpu", "cuda", "auto"]
 type ComputeType = Literal[
@@ -14,6 +17,49 @@ type ComputeType = Literal[
     "bfloat16",
     "float32",
 ]
+
+class DataType:
+    name: str
+    value: int
+
+    def __init__(self, value: int) -> None: ...
+
+class StorageView:
+    device: Devices
+    device_index: list[int] | int
+    dtype: DataType
+    shape: list[int]
+
+    @classmethod
+    def from_array(cls, array: Tensor | NDArray[Any]) -> Self: ...
+
+class EncoderForwardOutput:
+    last_hidden_state: StorageView
+    pooler_output: StorageView
+
+class Encoder:
+    def __init__(
+        self,
+        model_path: str,
+        device: Devices = "cpu",
+        *,
+        device_index: list[int] | int = 0,
+        compute_type: Mapping[str, ComputeType] | ComputeType = "default",
+        inter_threads: int = 1,
+        intra_threads: int = 0,
+        max_queued_batches: int = 0,
+        flash_attention: bool = False,
+        tensor_parallel: bool = False,
+        files: Mapping[str, BinaryIO] | None = None,
+    ) -> None: ...
+    def forward_batch(
+        self,
+        inputs: StorageView,
+        lengths: StorageView | None = None,
+        token_type_ids: list[list[int]] | None = None,
+    ) -> EncoderForwardOutput: ...
+    def load_model(self, keep_cache: bool = False) -> None: ...
+    def unload_model(self, to_cpu: bool = False) -> None: ...
 
 class GenerationStepResult[LogProbability: float | None = None]:
     batch_id: int

@@ -1,5 +1,6 @@
 # llm-api
 
+![API](https://img.shields.io/endpoint?url=https%3A%2F%2Fwinstxnhdw-llm-api.hf.space%2Fapi%2Fhealth&logo=huggingface&labelColor=%230B0F19&color=brightgreen&link=https%3A%2F%2Fhuggingface.co%2Fspaces%2Fwinstxnhdw%2Fllm-api)
 [![build.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/main.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/main.yml)
 [![deploy.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/deploy.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/deploy.yml)
 [![formatter.yml](https://github.com/winstxnhdw/llm-api/actions/workflows/formatter.yml/badge.svg)](https://github.com/winstxnhdw/llm-api/actions/workflows/formatter.yml)

@@ -1,5 +1,6 @@
 {
 	"extends": ["github>winstxnhdw/renovate"],
+	"ignoreDeps": ["nvidia-cublas-cu12"],
 	"packageRules": [
 		{
 			"matchDatasources": ["docker"],
