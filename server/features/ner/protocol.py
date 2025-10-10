@@ -24,6 +24,7 @@ class Entity(Struct, kw_only=True, gc=False):
     end (int)
         the end index of the entity in the text
     """
+
     label: Labels
     start: int
     end: int
