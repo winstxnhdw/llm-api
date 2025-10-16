@@ -16,7 +16,7 @@ dependencies = [
     "prometheus-client>=0.23.1",
     "aiohttp>=3.13.0",
     "opentelemetry-instrumentation-asgi>=0.58b0",
-    "opentelemetry-exporter-otlp-proto-http>=1.37.0",
+    "opentelemetry-exporter-otlp-proto-http>=1.38.0",
     "torch>=2.9.0",
     "fast-query-parsers>=1.0.3",
 ]
