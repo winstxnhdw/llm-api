@@ -9,7 +9,6 @@ from litestar.datastructures import State
 from litestar.openapi import OpenAPIConfig
 from litestar.openapi.spec import Server
 from litestar.plugins import PluginProtocol
-from litestar.plugins.prometheus import PrometheusConfig, PrometheusController
 from litestar.status_codes import HTTP_500_INTERNAL_SERVER_ERROR
 
 from server.api import health, v1
@@ -99,9 +98,8 @@ def app() -> Litestar:
     return Litestar(
         openapi_config=openapi_config,
         exception_handlers={HTTP_500_INTERNAL_SERVER_ERROR: partial(exception_handler, logger)},
-        route_handlers=[PrometheusController, v1_router, health],
+        route_handlers=[v1_router, health],
         plugins=plugins,
         lifespan=lifespans,
-        middleware=[PrometheusConfig(app_name).middleware],
         state=State({"config": config}),
     )

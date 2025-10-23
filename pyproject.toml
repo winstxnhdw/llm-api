@@ -13,12 +13,12 @@ dependencies = [
     "transformers>=4.57.0",
     "uvloop>=0.22.1",
     "picologging>=0.9.3; python_version < '3.13'",
-    "prometheus-client>=0.23.1",
     "aiohttp>=3.13.1",
     "opentelemetry-instrumentation-asgi>=0.58b0",
     "opentelemetry-exporter-otlp-proto-http>=1.38.0",
     "torch>=2.9.0",
     "fast-query-parsers>=1.0.3",
+    "opentelemetry-instrumentation-system-metrics>=0.59b0",
 ]
 
 [project.optional-dependencies]
