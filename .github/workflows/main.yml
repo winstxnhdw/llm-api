@@ -15,6 +15,7 @@ jobs:
     uses: winstxnhdw/actions/.github/workflows/uv.yml@main
     with:
       disable-test: true
+      install-project: true
 
   build:
     uses: winstxnhdw/actions/.github/workflows/docker-build.yml@main
