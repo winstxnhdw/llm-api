@@ -36,7 +36,6 @@ def get_meter_provider(*, otlp_service_name: str, otlp_service_instance_id: str)
         "cpython.gc.collections": None,
         "process.runtime.thread_count": None,
         "process.runtime.cpu.utilization": None,
-        "system.filesystem.usage": None,
     }
 
     resource = Resource({SERVICE_NAME: otlp_service_name, SERVICE_INSTANCE_ID: otlp_service_instance_id})
