@@ -7,7 +7,7 @@ from msgspec import Struct
 type Labels = Literal["O", "B-MISC", "I-MISC", "B-PER", "I-PER", "B-ORG", "I-ORG", "B-LOC", "I-LOC"]
 
 
-class Entity(Struct, kw_only=True, gc=False):
+class Entity(Struct, kw_only=True, frozen=True, gc=False):
     """
     Summary
     -------

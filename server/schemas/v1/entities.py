@@ -5,7 +5,7 @@ from msgspec import Struct
 from server.features.ner import Entity
 
 
-class Entities(Struct, kw_only=True, gc=False):
+class Entities(Struct, kw_only=True, frozen=True, gc=False):
     """
     Summary
     -------

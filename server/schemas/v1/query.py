@@ -6,7 +6,7 @@ from msgspec import Meta, Struct
 from server.typedefs import Message
 
 
-class Query(Struct, kw_only=True, gc=False):
+class Query(Struct, kw_only=True, frozen=True, gc=False):
     """
     Summary
     -------

@@ -3,7 +3,7 @@ from typing import Annotated
 from msgspec import Meta, Struct
 
 
-class Answer(Struct, kw_only=True, gc=False):
+class Answer(Struct, kw_only=True, frozen=True, gc=False):
     """
     Summary
     -------
