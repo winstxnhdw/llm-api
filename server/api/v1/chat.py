@@ -34,7 +34,7 @@ class ChatController(Controller):
         thread_pool = ConcurrencyState.EXECUTOR or ThreadPoolExecutor()
 
         async with PersistentConnection(request.receive, event=event):
-            answer = await wrap_future(thread_pool.submit(list, state.chat.query(data.messages, event) or []))
+            answer = await wrap_future(thread_pool.submit(tuple, state.chat.query(data.messages, event) or ()))
 
         return Answer(answer="".join(answer) if answer else "Max query length exceeded!")
 
@@ -63,7 +63,7 @@ class ChatController(Controller):
         """
         event = Event()
         start = perf_counter_ns()
-        answer = list(state.chat.query(data.messages, event) or ["Max query length exceeded!"])
+        answer = tuple(state.chat.query(data.messages, event) or ("Max query length exceeded!",))
         total_time = (perf_counter_ns() - start) / 1e9
         tokens = len(answer)
 

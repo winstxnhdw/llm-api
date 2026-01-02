@@ -112,7 +112,7 @@ class ChatModel(ChatAgentProtocol):
         success (bool)
             whether the static prompt was set successfully
         """
-        static_prompts: list[Message] = [
+        static_prompts: tuple[Message, ...] = (
             {
                 "role": "user",
                 "content": static_user_prompt,
@@ -121,7 +121,7 @@ class ChatModel(ChatAgentProtocol):
                 "role": "assistant",
                 "content": static_assistant_prompt,
             },
-        ]
+        )
 
         static_prompt = self.encode_messages(static_prompts)
         max_query_length = self.max_context_length - self.max_generation_length - len(static_prompt)
