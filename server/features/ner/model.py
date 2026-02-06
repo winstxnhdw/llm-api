@@ -4,7 +4,7 @@ from typing import Literal, Self
 from ctranslate2 import Encoder, StorageView
 from numpy import asarray, dtype, int8, int32, int64, ndarray
 from torch import Tensor, as_tensor, autocast, inference_mode
-from transformers.models.bert import BertForTokenClassification, BertTokenizerFast
+from transformers.models.bert import BertForTokenClassification, BertTokenizer
 
 from server.features.ner.protocol import Entity, NamedEntityRecognitionProtocol
 from server.utils import huggingface_download
@@ -30,7 +30,7 @@ class NamedEntityExtractor(NamedEntityRecognitionProtocol):
         model = BertForTokenClassification.from_pretrained(model_path)
 
         self.encoder = Encoder(model_path, compute_type="auto", max_queued_batches=-1)
-        self.tokeniser: BertTokenizerFast = BertTokenizerFast.from_pretrained(model_path)
+        self.tokeniser: BertTokenizer = BertTokenizer.from_pretrained(model_path)
         self.labels: Mapping[int, Labels] = model.config.id2label  # pyright: ignore [reportAttributeAccessIssue]
         self.model_classifier = model.classifier
         self.model_classifier.eval()
