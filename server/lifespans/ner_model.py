@@ -34,4 +34,4 @@ def load_ner_model() -> Callable[[Litestar], AbstractAsyncContextManager[None]]:
     lifespan (Callable[[Litestar], AbstractAsyncContextManager[None]])
         a Litestar-compatible lifespan context manager
     """
-    return lambda app: ner_model_lifespan(app)
+    return ner_model_lifespan

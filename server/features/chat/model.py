@@ -2,7 +2,7 @@ from collections.abc import Iterator, Sequence
 from typing import Self
 
 from ctranslate2 import Generator
-from transformers.models.qwen2 import Qwen2TokenizerFast
+from transformers.models.qwen2 import Qwen2Tokenizer
 
 from server.features.chat.protocol import ChatAgentProtocol
 from server.features.chat.stub import ChatModelStub
@@ -49,7 +49,7 @@ class ChatModel(ChatAgentProtocol):
     def __init__(
         self,
         generator: Generator,
-        tokeniser: Qwen2TokenizerFast,
+        tokeniser: Qwen2Tokenizer,
         min_query_length: int,
         max_context_length: int,
         max_generation_length: int,
@@ -215,7 +215,7 @@ def get_chat_model(chat_model_threads: int, *, use_cuda: bool, stub: bool) -> Ch
         return ChatModelStub()
 
     model_path = huggingface_download("winstxnhdw/Qwen2.5-7B-Instruct-ct2-int8")
-    tokeniser = Qwen2TokenizerFast.from_pretrained(model_path, legacy=False)
+    tokeniser = Qwen2Tokenizer.from_pretrained(model_path, legacy=False)
     generator = Generator(
         model_path,
         "cuda" if use_cuda else "cpu",
