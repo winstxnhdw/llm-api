@@ -5,7 +5,7 @@ description = "A fast CPU-based API for LLMs"
 requires-python = ">=3.13.7, <3.14"
 dependencies = [
     "ctranslate2>=4.7.1",
-    "granian>=2.7.0",
+    "granian>=2.7.1",
     "jinja2>=3.1.6",
     "litestar>=2.20.0",
     "msgspec>=0.20.0",
