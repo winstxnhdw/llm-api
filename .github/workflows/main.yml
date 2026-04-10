@@ -44,7 +44,7 @@ jobs:
           docker builder prune -af || true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v7.0.0
+        uses: docker/build-push-action@v7.1.0
         with:
           outputs: type=cacheonly
           labels: ${{ steps.meta.outputs.labels }}
