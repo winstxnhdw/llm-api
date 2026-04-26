@@ -1,4 +1,4 @@
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from aiohttp import ClientSession
@@ -18,7 +18,7 @@ async def consul_register(
     consul_service_address: str,
     server_root_path: str,
     consul_auth_token: str | None = None,
-) -> AsyncIterator[None]:
+) -> AsyncGenerator[None]:
     """
     Summary
     -------
@@ -49,9 +49,7 @@ async def consul_register(
     """
     headers: dict[str, str] = {}
     consul_server = f"https://{consul_http_addr}/v1/agent/service"
-
     health_endpoint = f"https://{consul_service_address}:443{server_root_path}{health.paths.pop()}"
-
     health_check = {
         "HTTP": health_endpoint,
         "Interval": "30s",

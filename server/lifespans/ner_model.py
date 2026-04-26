@@ -1,4 +1,4 @@
-from collections.abc import AsyncIterator, Callable
+from collections.abc import AsyncGenerator, Callable
 from contextlib import AbstractAsyncContextManager, asynccontextmanager
 
 from litestar import Litestar
@@ -7,7 +7,7 @@ from server.features.ner import get_named_entity_recognition_model
 
 
 @asynccontextmanager
-async def ner_model_lifespan(app: Litestar) -> AsyncIterator[None]:
+async def ner_model_lifespan(app: Litestar) -> AsyncGenerator[None]:
     """
     Summary
     -------

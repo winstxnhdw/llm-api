@@ -1,4 +1,4 @@
-from collections.abc import AsyncIterator, Callable
+from collections.abc import AsyncGenerator, Callable
 from contextlib import AbstractAsyncContextManager, asynccontextmanager
 
 from litestar import Litestar
@@ -9,7 +9,7 @@ from server.features.chat import get_chat_model
 @asynccontextmanager
 async def chat_model_lifespan(
     app: Litestar, *, chat_model_threads: int, use_cuda: bool, stub: bool
-) -> AsyncIterator[None]:
+) -> AsyncGenerator[None]:
     """
     Summary
     -------
