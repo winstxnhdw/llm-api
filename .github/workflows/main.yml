@@ -21,15 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@v7.0.0
         with:
           show-progress: false
 
       - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v4.0.0
+        uses: docker/setup-buildx-action@v4.1.0
 
       - name: Extract metadata for Docker
-        uses: docker/metadata-action@v6.0.0
+        uses: docker/metadata-action@v6.1.0
         id: meta
         with:
           images: ghcr.io/${{ github.repository }}
@@ -44,7 +44,7 @@ jobs:
           docker builder prune -af || true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v7.1.0
+        uses: docker/build-push-action@v7.2.0
         with:
           outputs: type=cacheonly
           labels: ${{ steps.meta.outputs.labels }}
