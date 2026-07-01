@@ -4,19 +4,19 @@ version = "0.1.0"
 description = "A fast CPU-based API for LLMs"
 requires-python = ">=3.14.3, <3.15"
 dependencies = [
-    "ctranslate2>=4.7.1",
-    "granian>=2.7.3",
+    "ctranslate2>=4.8.0",
+    "granian>=2.7.8",
     "jinja2>=3.1.6",
-    "litestar>=2.21.1",
+    "litestar>=2.24.0",
     "msgspec>=0.21.1",
-    "pydantic-settings>=2.14.0",
-    "transformers>=5.6.1",
+    "pydantic-settings>=2.14.2",
+    "transformers>=5.12.1",
     "uvloop>=0.22.1",
     "picologging>=0.9.3; python_version < '3.13'",
-    "aiohttp>=3.13.5",
+    "aiohttp>=3.14.1",
     "opentelemetry-instrumentation-asgi>=0.58b0",
     "opentelemetry-exporter-otlp-proto-http>=1.43.0",
-    "torch>=2.11.0",
+    "torch>=2.12.1",
     "fast-query-parsers>=1.0.3",
     "opentelemetry-instrumentation-system-metrics>=0.59b0",
 ]
@@ -25,7 +25,7 @@ dependencies = [
 cuda = ["nvidia-cublas-cu12>=12.0.1.189"]
 
 [dependency-groups]
-dev = ["nodejs-wheel-binaries>=24.15.0", "pyright>=1.1.408", "ruff>=0.15.11"]
+dev = ["nodejs-wheel-binaries>=24.16.0", "pyright>=1.1.411", "ruff>=0.15.20"]
 
 [build-system]
 requires = ["uv_build"]
