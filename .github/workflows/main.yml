@@ -12,7 +12,7 @@ on:
 
 jobs:
   test:
-    uses: winstxnhdw/actions/.github/workflows/uv.yml@main
+    uses: winstxnhdw/actions/.github/workflows/uv.yml@f43de6b5804c7609cb6f13864e2d18a70301469e # main
     with:
       disable-test: true
       install-project: true
@@ -56,7 +56,7 @@ jobs:
   push:
     if: github.ref == 'refs/heads/main'
     needs: [test, build]
-    uses: winstxnhdw/actions/.github/workflows/docker-push.yml@main
+    uses: winstxnhdw/actions/.github/workflows/docker-push.yml@f43de6b5804c7609cb6f13864e2d18a70301469e # main
     with:
       file: Dockerfile.build
     secrets:
@@ -66,6 +66,6 @@ jobs:
 
   restart:
     needs: push
-    uses: winstxnhdw/actions/.github/workflows/spaces-restart.yml@main
+    uses: winstxnhdw/actions/.github/workflows/spaces-restart.yml@f43de6b5804c7609cb6f13864e2d18a70301469e # main
     secrets:
       token: ${{ secrets.HF_TOKEN }}
