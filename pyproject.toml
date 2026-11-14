@@ -9,8 +9,8 @@ dependencies = [
     "jinja2>=3.1.6",
     "litestar>=2.25.0",
     "msgspec>=0.22.0",
-    "pydantic-settings>=2.16.2",
-    "transformers>=5.22.2",
+    "pydantic-settings>=2.16.3",
+    "transformers>=5.23.0",
     "uvloop>=0.23.0",
     "picologging>=0.9.3; python_version < '3.13'",
     "aiohttp>=3.14.5",
@@ -25,7 +25,7 @@ dependencies = [
 cuda = ["nvidia-cublas-cu12>=12.0.1.189"]
 
 [dependency-groups]
-dev = ["nodejs-wheel-binaries>=24.19.0", "pyright>=1.1.408", "ruff>=0.17.4"]
+dev = ["nodejs-wheel-binaries>=24.19.0", "pyright>=1.1.414", "ruff>=0.17.5"]
 
 [build-system]
 requires = ["uv_build"]
